@@ -1,31 +1,231 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Sign In
+{% endblock %}
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+	<!-- Navbar Area Start -->
+	<div
+		class="navbar-area">
+		<!-- Menu For Mobile Device -->
+		<div class="mobile-nav">
+			<a href="index.html" class="logo">
+				<img src="{{asset('img/logo.png')}}" alt="logo" width="45px">
+			</a>
+		</div>
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-    {% endif %}
+		<!-- Menu For Desktop Device -->
+		<div class="main-nav">
+			<div class="container">
+				<nav class="navbar navbar-expand-lg navbar-light">
+					<a class="navbar-brand" href="{{path('app_index')}}">
+						<img src="{{asset('img/logo.png')}}" alt="logo" width="45px">
+					</a>
+					<div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
+						<ul class="navbar-nav m-auto">
+							<li class="nav-item">
+								<a href="#" class="nav-link active">Home</a>
+							</li>
+							<li class="nav-item">
+								<a href="#" class="nav-link">Jobs</a>
+							</li>
+							<li class="nav-item">
+								<a href="#" class="nav-link">Catagories</a>
+							</li>
+							<li class="nav-item">
+								<a href="#" class="nav-link">About</a>
+							</li>
+							<li class="nav-item">
+								<a href="#" class="nav-link">Contact Us</a>
+							</li>
+						</ul>
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+						<div class="other-option">
+							<a href="{{path('app_register')}}" class="signup-btn">Sign Up</a>
+							<a href="{{path('app_login')}}" class="signin-btn">Sign In</a>
+						</div>
+					</div>
+				</nav>
+			</div>
+		</div>
+	</div>
+	<!-- Navbar Area End -->
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+	<!-- Page Title Start -->
+	<section class="page-title title-bg12">
+		<div class="d-table">
+			<div class="d-table-cell">
+				<ul>
+					<li>
+						<h3>Sign In</h3>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="lines">
+			<div class="line"></div>
+			<div class="line"></div>
+			<div class="line"></div>
+		</div>
+	</section>
+	<!-- Page Title End -->
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
+	{% if app.user %}
+		<div class="mb-3">
+			You are logged in as
+			{{ app.user.userIdentifier }},
+			<a href="{{ path('app_logout') }}">Logout</a>
+		</div>
+	{% endif %}
+
+	<!-- Sign In Section Start -->
+	<div class="signin-section ptb-100">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 col-md-8 offset-md-2 offset-lg-3">
+					<form method="post" class="signin-form">
+						{% if error %}
+							<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+						{% endif %}
+						<div class="form-group">
+							<label>Enter Email</label>
+							<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+						</div>
+
+						<div class="form-group">
+							<label>Enter Password</label>
+							<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+						</div>
+
+						<div class="signin-btn text-center">
+							<button type="submit">Sign In</button>
+						</div>
+
+						<div class="other-signin text-center">
+							<p>Forgot passwrd ?
+								<a href="#">Click here</a>
+							</p>
+							<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+						</div>
+
+						<div class="create-btn text-center">
+							<p>Not have an account?
+								<a href="{{path('app_register')}}">
+									Create an account
+									<i class='bx bx-chevrons-right bx-fade-right'></i>
+								</a>
+							</p>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Sign In Section End -->
+
+	<!-- Footer Section Start -->
+	<footer class="footer-area pt-100 pb-70">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-sm-6">
+					<div class="footer-widget">
+						<div class="footer-logo">
+							<a href="index.html">
+								<img src="{{asset('img/logo.png')}}" alt="logo" width="100px">
+							</a>
+						</div>
+
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incididunt ut labore
+																																																																														                        et dolore magna. Sed eiusmod tempor incididunt ut.</p>
+
+						<div class="footer-social">
+							<a href="#" target="_blank">
+								<i class='bx bxl-facebook'></i>
+							</a>
+							<a href="#" target="_blank">
+								<i class='bx bxl-twitter'></i>
+							</a>
+							<a href="#" target="_blank">
+								<i class='bx bxl-pinterest-alt'></i>
+							</a>
+							<a href="#" target="_blank">
+								<i class='bx bxl-linkedin'></i>
+							</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-3 col-sm-6">
+					<div class="footer-widget pl-60">
+						<h3>For Candidate</h3>
+						<ul>
+							<li><a href="#"><i class='bx bx-chevrons-right bx-tada'></i>Browse Jobs</a></li>
+							<li><a href="#"><i class='bx bx-chevrons-right bx-tada'></i>Account</a></li>
+							<li><a href="#"><i class='bx bx-chevrons-right bx-tada'></i>Browse Categories</a></li>
+							<li><a href="#"><i class='bx bx-chevrons-right bx-tada'></i>Resume</a></li>
+							<li><a href="#"><i class='bx bx-chevrons-right bx-tada'></i>Job List</a></li>
+							<li><a href="#"><i class='bx bx-chevrons-right bx-tada'></i>Sign Up</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="col-lg-3 col-sm-6">
+					<div class="footer-widget pl-60">
+						<h3>Quick Links</h3>
+						<ul>
+							<li><a href="#"><i class='bx bx-chevrons-right bx-tada'></i>Home</a></li>
+							<li><a href="#"><i class='bx bx-chevrons-right bx-tada'></i>About</a></li>
+							<li><a href="#"><i class='bx bx-chevrons-right bx-tada'></i>FAQ</a></li>
+							<li><a href="#"><i class='bx bx-chevrons-right bx-tada'></i>Pricing</a></li>
+							<li><a href="#"><i class='bx bx-chevrons-right bx-tada'></i>Privacy</a></li>
+							<li><a href="#"><i class='bx bx-chevrons-right bx-tada'></i>Contact</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="col-lg-3 col-sm-6">
+					<div class="footer-widget footer-info">
+						<h3>Information</h3>
+						<ul>
+							<li>
+								<span>
+									<i class='bx bxs-phone'></i>
+									Phone:
+								</span>
+								<a href="tel:882569756">
+									+123 456 678
+								</a>
+							</li>
+
+							<li>
+								<span>
+									<i class='bx bxs-envelope'></i>
+									Email:
+								</span>
+								<a href="mailto:info@jovie.com">
+									info@tekup-job-board.com
+								</a>
+							</li>
+
+							<li>
+								<span>
+									<i class='bx bx-location-plus'></i>
+									Address:
+								</span>
+								123, Rades, Tunis
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<div class="copyright-text text-center">
+		<p>Copyright &copy;
+			{{ "now"|date('Y') }}
+			{{ app_name }}
+		</p>
+	</div>
+	<!-- Footer Section End -->
 {% endblock %}

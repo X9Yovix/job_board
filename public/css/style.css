@@ -2542,8 +2542,10 @@ h3 {
 .page-title {
   background-position: center center;
   background-size: cover;
-  padding-top: 150px;
-  padding-bottom: 150px;
+  /* padding-top: 150px;
+  padding-bottom: 150px; */
+  padding-top: 80px;
+  padding-bottom: 80px;
   position: relative;
   z-index: 1;
   text-align: center;
@@ -3641,7 +3643,7 @@ h3 {
 /*---------- Resume CSS End ----------*/
 /*---------- Sign In CSS Start ----------*/
 .page-title.title-bg12 {
-  background-image: url(../img/title-bg/12.jpg);
+  background-image: url(../img/banner/login.jpg);
 }
 
 .signin-form {
