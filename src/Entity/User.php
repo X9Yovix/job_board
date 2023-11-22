@@ -46,7 +46,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->verified = false;
-        $this->tokenLifetime = getenv('REGISTRATION_TOKEN_LIFETIME');
+        $this->tokenLifetime = $_ENV['REGISTRATION_TOKEN_LIFETIME'];
         $this->registrationTokenLifeTime = (new DateTime('now'))->add(new DateInterval($this->tokenLifetime));
     }
 

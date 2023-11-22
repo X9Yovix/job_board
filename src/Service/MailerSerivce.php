@@ -13,18 +13,21 @@ class MailerService
     {
     }
 
-    public function send(string $to, string $subject, string $template, array $context)
+    public function sendEmail(string $to, string $subject, string $template, array $context): bool
     {
-        $email = (new TemplatedEmail())
-            ->from(new Address('noreply@job-board.tn'))
-            ->to($to)
-            ->subject($subject)
-            ->htmlTemplate("mails/$template")
-            ->context($context);
         try {
+            $email = (new TemplatedEmail())
+                ->from(new Address($_ENV['MAILER_FROM'], $_ENV['APP_NAME']))
+                ->to(new Address($to))
+                ->subject($subject)
+                ->htmlTemplate("mails/$template")
+                ->context($context);
+
             $this->mailer->send($email);
+            return true;
         } catch (TransportExceptionInterface $exception) {
             throw $exception->getMessage();
+            return false;
         }
     }
 }
