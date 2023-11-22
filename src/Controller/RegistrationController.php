@@ -57,7 +57,7 @@ class RegistrationController extends AbstractController
 
             if (!$res) {
                 $entityManager->rollback();
-                $this->addFlash('error', 'An error occurred while sending the email, please try again later.');
+                $this->addFlash('danger', 'An error occurred while sending the email, please try again later.');
                 return $this->redirectToRoute('app_register');
             }
 
@@ -71,9 +71,28 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    #[Route('/account_verification', name: 'account_verification')]
-    public function account_verification(): Response
+    #[Route('/verify/{token}/{id<\d+>}', name: 'account_verification')]
+    public function account_verification(string $token, int $id, User $user, EntityManagerInterface $em): Response
     {
-        return $this->render('registration/account_verification.html.twig');
+        if ($user->getRegistrationToken() !== $token) {
+            $this->addFlash('danger', 'The token is invalid.');
+            return $this->redirectToRoute('app_register');
+        }
+
+        if ($user->getRegistrationToken() === null) {
+            $this->addFlash('danger', 'Your account is already activated.');
+            return $this->redirectToRoute('app_login');
+        }
+
+        if ($user->getRegistrationTokenLifeTime() < new \DateTime()) {
+            $this->addFlash('danger', 'The token has expired.');
+            return $this->redirectToRoute('app_register');
+        }
+
+        $user->setVerified(true);
+        $user->setRegistrationToken(null);
+        $em->flush();
+        $this->addFlash('success', 'Registration completed successfully.');
+        return $this->redirectToRoute('app_login');
     }
 }
