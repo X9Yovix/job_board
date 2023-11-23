@@ -1,0 +1,55 @@
+<!-- Navbar Area Start -->
+<div class="navbar-area">
+    <!-- Menu For Mobile Device -->
+    <div class="mobile-nav">
+        <a href="index.html" class="logo">
+            <img src="{{asset('img/logo.png')}}" alt="logo" width="45px">
+        </a>
+    </div>
+
+    <!-- Menu For Desktop Device -->
+    <div class="main-nav">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="navbar-brand" href="{{path('app_index')}}">
+                    <img src="{{asset('img/logo.png')}}" alt="logo" width="45px">
+                </a>
+                <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
+                    <ul class="navbar-nav m-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Jobs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Catagories</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Contact Us</a>
+                        </li>
+                    </ul>
+
+                    <div class="other-option">
+                        {% if app.user %}
+                        <div>
+                            Auth user: {{ app.user.firstName }}
+                            <a href="{{ path('app_logout') }}">Logout</a>
+                        </div>
+                        {% else %}
+                        <div>
+                            <a href="{{path('app_register')}}" class="signup-btn">Sign Up</a>
+                            <a href="{{path('app_login')}}" class="signin-btn">Sign In</a>
+                        </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+<!-- Navbar Area End -->
