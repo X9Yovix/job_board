@@ -20,12 +20,14 @@ final class Version20231121190644 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
+        $this->addSql('ALTER TABLE user ADD created_at DATETIME NOT NULL');
         $this->addSql('ALTER TABLE user ADD registration_token VARCHAR(255) DEFAULT NULL, ADD verified TINYINT(1) NOT NULL, CHANGE created_at registration_token_life_time DATETIME NOT NULL');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
+        $this->addSql('ALTER TABLE user DROP created_at');
         $this->addSql('ALTER TABLE user DROP registration_token, DROP verified, CHANGE registration_token_life_time created_at DATETIME NOT NULL');
     }
 }

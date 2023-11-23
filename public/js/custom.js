@@ -56,8 +56,12 @@ jQuery(function ($) {
     })
 
     // Nice Select
-    $('select').niceSelect();
+    /* $('select').niceSelect(); */
 
+    // Select 2
+    $('select').select2();
+    /* $('b[role="presentation"]').hide();
+    $('.select2-selection__arrow').append('<i class="fa fa-angle-down"></i>'); */
 
     // Tastimonial Two Slider JS
     $('.testimonial-slider-two').owlCarousel({

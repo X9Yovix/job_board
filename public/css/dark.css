@@ -46,23 +46,23 @@ Default CSS
   -webkit-transition: 0.4s;
   transition: 0.4s;
   -webkit-box-shadow: 0 0px 15px #2020203d;
-          box-shadow: 0 0px 15px #2020203d;
+  box-shadow: 0 0px 15px #2020203d;
   background: url(../img/night.png);
   background-repeat: no-repeat;
   background-position: center;
 }
 
-.switch-box input:checked + .slider {
+.switch-box input:checked+.slider {
   background-color: #cbc1c1;
 }
 
-.switch-box input:focus + .slider {
+.switch-box input:focus+.slider {
   background-color: #4d4949;
 }
 
-.switch-box input:checked + .slider:before {
+.switch-box input:checked+.slider:before {
   -webkit-transform: translateX(24px);
-          transform: translateX(24px);
+  transform: translateX(24px);
   background: url(../img/sunny.png);
   background-repeat: no-repeat;
   background-position: center;
@@ -97,15 +97,48 @@ Default CSS
   color: #ffffff;
 }
 
-.theme-dark .h1, .theme-dark .h2, .theme-dark .h3, .theme-dark .h4, .theme-dark .h5, .theme-dark .h6, .theme-dark h1, .theme-dark h2, .theme-dark h3, .theme-dark h4, .theme-dark h5, .theme-dark h6 {
+.theme-dark .h1,
+.theme-dark .h2,
+.theme-dark .h3,
+.theme-dark .h4,
+.theme-dark .h5,
+.theme-dark .h6,
+.theme-dark h1,
+.theme-dark h2,
+.theme-dark h3,
+.theme-dark h4,
+.theme-dark h5,
+.theme-dark h6 {
   color: #ffffff !important;
 }
 
-.theme-dark .h1 a, .theme-dark .h2 a, .theme-dark .h3 a, .theme-dark .h4 a, .theme-dark .h5 a, .theme-dark .h6 a, .theme-dark h1 a, .theme-dark h2 a, .theme-dark h3 a, .theme-dark h4 a, .theme-dark h5 a, .theme-dark h6 a {
+.theme-dark .h1 a,
+.theme-dark .h2 a,
+.theme-dark .h3 a,
+.theme-dark .h4 a,
+.theme-dark .h5 a,
+.theme-dark .h6 a,
+.theme-dark h1 a,
+.theme-dark h2 a,
+.theme-dark h3 a,
+.theme-dark h4 a,
+.theme-dark h5 a,
+.theme-dark h6 a {
   color: #ffffff !important;
 }
 
-.theme-dark .h1 a:hover, .theme-dark .h2 a:hover, .theme-dark .h3 a:hover, .theme-dark .h4 a:hover, .theme-dark .h5 a:hover, .theme-dark .h6 a:hover, .theme-dark h1 a:hover, .theme-dark h2 a:hover, .theme-dark h3 a:hover, .theme-dark h4 a:hover, .theme-dark h5 a:hover, .theme-dark h6 a:hover {
+.theme-dark .h1 a:hover,
+.theme-dark .h2 a:hover,
+.theme-dark .h3 a:hover,
+.theme-dark .h4 a:hover,
+.theme-dark .h5 a:hover,
+.theme-dark .h6 a:hover,
+.theme-dark h1 a:hover,
+.theme-dark h2 a:hover,
+.theme-dark h3 a:hover,
+.theme-dark h4 a:hover,
+.theme-dark h5 a:hover,
+.theme-dark h6 a:hover {
   color: #fd1616 !important;
 }
 
@@ -232,9 +265,15 @@ Default CSS
 
 .theme-dark .job-post-from .form-group .nice-select .list {
   background-color: #272727;
+  /* added */
+  /* max-height: 200px;
+  overflow-y: scroll !important; */
+  /* height: 60vh;
+  overflow: auto; */
 }
 
-.theme-dark .job-post-from .form-group .nice-select .option.focus, .theme-dark .job-post-from .form-group .nice-select .option:hover {
+.theme-dark .job-post-from .form-group .nice-select .option.focus,
+.theme-dark .job-post-from .form-group .nice-select .option:hover {
   background-color: #fd1616;
 }
 
@@ -570,9 +609,13 @@ Default CSS
 
 .theme-dark .find-form .nice-select .list {
   background-color: #000000;
+  /* added */
+  max-height: 200px;
+  overflow-y: scroll !important;
 }
 
-.theme-dark .find-form .nice-select .option.focus, .theme-dark .find-form .nice-select .option:hover {
+.theme-dark .find-form .nice-select .option.focus,
+.theme-dark .find-form .nice-select .option:hover {
   background-color: #fd1616;
 }
 
@@ -616,4 +659,41 @@ Default CSS
 
 .theme-dark .contact-area form .form-group .form-control::placeholder {
   color: #ffffff;
+}
+
+.theme-dark #countryEmoji {
+  background: black !important;
+}
+
+.theme-dark .select2-container--default .select2-selection--single {
+  background-color: #000 !important;
+  color: white;
+}
+
+.theme-dark .select2-container--default .select2-selection--single .select2-selection__arrow {
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#331f1f), to(#842e2e));
+  background-image: -moz-linear-gradient(top, #331f1f, #842e2e);
+  background-image: -ms-linear-gradient(top, #331f1f, #842e2e);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #331f1f), color-stop(100%, #842e2e));
+  background-image: -webkit-linear-gradient(top, #331f1f, #842e2e);
+  background-image: -o-linear-gradient(top, #331f1f, #842e2e);
+  background-image: linear-gradient(#331f1f, #842e2e);
+}
+
+.theme-dark .select2-container .select2-dropdown .select2-search {
+  background-color: #000 !important;
+  color: white;
+}
+
+.theme-dark .select2-container .select2-dropdown .select2-results .select2-results__options {
+  background-color: #000 !important;
+  color: white;
+}
+.theme-dark .select2-container--default .select2-results__option--selected{
+  color: white;
+}
+
+
+.theme-dark .select2-container .select2-selection--single .select2-selection__rendered {
+  color: white;
 }

@@ -4,20 +4,6 @@
 <head>
 	<meta charset="UTF-8">
 	<title>{% block title %}TEKUP-JOB-BOARD{% endblock %}</title>
-
-	<link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
-	<link rel="stylesheet" href="{{asset('css/owl.carousel.min.css')}}">
-	<link rel="stylesheet" href="{{asset('css/owl.theme.default.min.css')}}">
-	<link rel="stylesheet" href="{{asset('css/boxicon.min.css')}}">
-	<link rel="stylesheet" href="{{asset('fonts/flaticon/flaticon.css')}}">
-	<link rel="stylesheet" href="{{asset('css/meanmenu.css')}}">
-	<link rel="stylesheet" href="{{asset('css/nice-select.css')}}">
-	<link rel="stylesheet" href="{{asset('css/style.css')}}">
-	<link rel="stylesheet" href="{{asset('css/dark.css')}}">
-	<link rel="stylesheet" href="{{asset('css/responsive.css')}}">
-
-
-
 	<link rel="stylesheet" href="{{asset('css/bootstrap.min.css') }}">
 	<link rel="stylesheet" href="{{asset('css/owl.carousel.min.css') }}">
 	<link rel="stylesheet" href="{{asset('css/owl.theme.default.min.css') }}">
@@ -26,11 +12,12 @@
 	<link rel="stylesheet" href="{{asset('css/meanmenu.css') }}">
 	<link rel="stylesheet" href="{{asset('css/style.css') }}">
 	<link rel="stylesheet" href="{{asset('css/dark.css') }}">
+	<link rel="stylesheet" href="{{asset('css/select2.min.css') }}">
 	<link rel="stylesheet" href="{{asset('css/responsive.css') }}">
 	<link rel="icon" type="image/png" href="{{asset('img/favicon.ico') }}">
 	{% block stylesheets %}
 	{% endblock %}
-
+	<script src="{{asset('js/jquery.min.js')}}"></script>
 	{% block javascripts %}
 	{% endblock %}
 </head>
@@ -60,21 +47,23 @@
 	<!-- Pre-loader End -->
 
 	{% include '_partials/_flash.html.twig' %}
+
 	{% block body %}{% endblock %}
+	
 	<!-- Back To Top Start -->
 	<div class="top-btn">
 		<i class='bx bx-chevrons-up bx-fade-up'></i>
 	</div>
 	<!-- Back To Top End -->
 
-	<script src="{{asset('js/jquery.min.js')}}"></script>
 	<script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
 	<script src="{{asset('js/owl.carousel.min.js')}}"></script>
-	<script src="{{asset('js/jquery.nice-select.min.js')}}"></script>
 	<script src="{{asset('js/jquery.magnific-popup.min.js')}}"></script>
 	<script src="{{asset('js/form-validator.min.js')}}"></script>
 	<script src="{{asset('js/meanmenu.js')}}"></script>
+	<script src="{{asset('js/select2.min.js')}}"></script>
 	<script src="{{asset('js/custom.js')}}"></script>
+	
 </body>
 
 </html>
