@@ -39,6 +39,11 @@ class RegistrationController extends AbstractController
         MailerService $mailerService,
         ValidatorInterface $validator
     ): Response {
+        //$this->denyAccessUnlessGranted('IS_ANONYMOUS');
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_index');
+        }
+
         $query = $this->entityManager->createQueryBuilder()
             ->select('c.id, c.name')
             ->from(Country::class, 'c')
@@ -146,6 +151,10 @@ class RegistrationController extends AbstractController
     #[Route('/verify/{token}/{id<\d+>}', name: 'account_verification')]
     public function account_verification(string $token, User $user): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_index');
+        }
+        
         if ($user->getRegistrationToken() !== $token) {
             $this->addFlash('danger', 'The token is invalid.');
             return $this->redirectToRoute('app_register');
