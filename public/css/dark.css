@@ -689,11 +689,16 @@ Default CSS
   background-color: #000 !important;
   color: white;
 }
-.theme-dark .select2-container--default .select2-results__option--selected{
+
+.theme-dark .select2-container--default .select2-results__option--selected {
   color: white;
 }
 
 
 .theme-dark .select2-container .select2-selection--single .select2-selection__rendered {
   color: white;
+}
+
+.theme-dark .check-your-email.page-title::before {
+  background-color: #000;
 }

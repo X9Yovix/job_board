@@ -7,19 +7,14 @@ use App\Entity\User;
 use App\Entity\State;
 use App\Entity\Country;
 use App\Service\MailerService;
-use App\Form\RegistrationFormType;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\VarDumper\VarDumper;
-use Symfony\Component\Validator\Validation;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\Type;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Choice;
-use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Collection;
@@ -27,20 +22,24 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
-use Symfony\Component\Validator\Constraints\IsFalse;
 
 class RegistrationController extends AbstractController
 {
+
+    public function __construct(private readonly EntityManagerInterface $entityManager)
+    {
+    }
+
     #[Route('/register', name: 'app_register')]
     public function register(
         Request $request,
         UserPasswordHasherInterface $hash,
-        EntityManagerInterface $entityManager,
+
         TokenGeneratorInterface $tokenGenInterface,
         MailerService $mailerService,
         ValidatorInterface $validator
     ): Response {
-        $query = $entityManager->createQueryBuilder()
+        $query = $this->entityManager->createQueryBuilder()
             ->select('c.id, c.name')
             ->from(Country::class, 'c')
             ->getQuery();
@@ -112,9 +111,9 @@ class RegistrationController extends AbstractController
             $tokenRegistration = $tokenGenInterface->generateToken();
             $user->setRegistrationToken($tokenRegistration);
 
-            $entityManager->beginTransaction();
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $this->entityManager->beginTransaction();
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
 
             $res = $mailerService->sendEmail(
                 $user->getEmail(),
@@ -128,12 +127,12 @@ class RegistrationController extends AbstractController
             );
 
             if (!$res) {
-                $entityManager->rollback();
+                $this->entityManager->rollback();
                 $this->addFlash('danger', 'An error occurred while sending the email, please try again later');
                 return $this->redirectToRoute('app_register');
             }
 
-            $entityManager->commit();
+            $this->entityManager->commit();
             $this->addFlash('success', 'Your account has been created, please check your email to activate it');
             return $this->redirectToRoute('app_login');
         }
@@ -145,7 +144,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/verify/{token}/{id<\d+>}', name: 'account_verification')]
-    public function account_verification(string $token, User $user, EntityManagerInterface $em): Response
+    public function account_verification(string $token, User $user): Response
     {
         if ($user->getRegistrationToken() !== $token) {
             $this->addFlash('danger', 'The token is invalid.');
@@ -164,15 +163,15 @@ class RegistrationController extends AbstractController
 
         $user->setVerified(true);
         $user->setRegistrationToken(null);
-        $em->flush();
+        $this->entityManager->flush();
         $this->addFlash('success', 'Registration completed successfully.');
         return $this->redirectToRoute('app_login');
     }
 
     #[Route('/states/{country}', name: 'get_states')]
-    public function getRegions($country, EntityManagerInterface $entityManager): JsonResponse
+    public function getRegions($country): JsonResponse
     {
-        $states = $entityManager->getRepository(State::class)->findBy(['country' => $country]);
+        $states = $this->entityManager->getRepository(State::class)->findBy(['country' => $country]);
         $res = [];
         foreach ($states as $state) {
             array_push($res, [
@@ -185,9 +184,9 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/cities/{state}', name: 'get_cities')]
-    public function getCities($state, EntityManagerInterface $entityManager): JsonResponse
+    public function getCities($state): JsonResponse
     {
-        $cities = $entityManager->getRepository(City::class)->findBy(['state' => $state]);
+        $cities = $this->entityManager->getRepository(City::class)->findBy(['state' => $state]);
         $res = [];
         foreach ($cities as $city) {
             array_push($res, [
@@ -200,10 +199,10 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/country/flag/{id}', name: 'get_flag_emoji')]
-    public function getFlagEmoji($id, EntityManagerInterface $entityManager): JsonResponse
+    public function getFlagEmoji($id): JsonResponse
     {
 
-        $query = $entityManager->createQueryBuilder()
+        $query = $this->entityManager->createQueryBuilder()
             ->select('c.phonecode, c.emoji')
             ->from(Country::class, 'c')
             ->where('c.id = :id')

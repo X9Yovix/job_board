@@ -2567,10 +2567,13 @@ h3 {
 }
 
 .page-title h2 {
-  font-size: 45px;
+  /* added */
+  font-size: 35px; 
+  /* font-size: 45px; */
   color: #ffffff;
   font-weight: 700;
-  margin-bottom: 15px;
+  /* added */
+  /* margin-bottom: 15px; */
   text-transform: capitalize;
 }
 
@@ -3870,7 +3873,7 @@ h3 {
 /*---------- Sign Up  CSS End ----------*/
 /*---------- Reset Password CSS Start ----------*/
 .page-title.title-bg14 {
-  background-image: url(../img/title-bg/14.jpg);
+  background-image: url(../img/banner/reset_password.jpg);
 }
 
 .reset-form {
@@ -4933,4 +4936,12 @@ h3 {
 .select2-container .select2-selection--single .select2-selection__rendered {
   font-size: 1rem;
   margin-top: -13px;
+}
+
+.check-your-email {
+  padding: 25rem 0;
+}
+
+.check-your-email.page-title::before {
+  background-color: #000;
 }
