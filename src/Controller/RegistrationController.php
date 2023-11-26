@@ -39,7 +39,7 @@ class RegistrationController extends AbstractController
         MailerService $mailerService,
         ValidatorInterface $validator
     ): Response {
-        //$this->denyAccessUnlessGranted('IS_ANONYMOUS');
+
         if ($this->getUser()) {
             return $this->redirectToRoute('app_index');
         }
@@ -51,6 +51,8 @@ class RegistrationController extends AbstractController
 
         $countries = $query->getResult();
         $errors = [];
+        $roles = ['RECRUITER', 'CANDIDATE'];
+        
         if ($request->isMethod(Request::METHOD_POST)) {
             $data = $request->request->all();
 
@@ -80,6 +82,7 @@ class RegistrationController extends AbstractController
                     new NotBlank(['message' => 'Please select your gender']),
                     new Choice(['choices' => ['male', 'female'], 'message' => 'Please select your gender'])
                 ],
+                'role' => [new NotBlank(['message' => 'Please select your role',])],
             ]);
 
             $errors = $validator->validate($data, $constraints);
@@ -94,6 +97,7 @@ class RegistrationController extends AbstractController
                 return $this->render('registration/register.html.twig', [
                     'countries' => $countries,
                     'errors' => $errors,
+                    'roles' => $roles
                 ]);
             }
 
@@ -107,6 +111,14 @@ class RegistrationController extends AbstractController
             $user->setCity($data['city']);
             $user->setPhoneNumber('(' . $data['phoneCode'] . ') ' . $data['phoneNumber']);
             $user->setGender($data['gender']);
+
+            if ($data['role'] === 'RECRUITER') {
+                $user->setRoles(['ROLE_RECRUITER']);
+            }
+            if ($data['role'] === 'CANDIDATE') {
+                $user->setRoles(['ROLE_CANDIDATE']);
+            }
+
             $user->setPassword(
                 $hash->hashPassword(
                     $user,
@@ -145,6 +157,7 @@ class RegistrationController extends AbstractController
         return $this->render('registration/register.html.twig', [
             'countries' => $countries,
             'errors' => $errors,
+            'roles' => $roles
         ]);
     }
 
@@ -154,7 +167,7 @@ class RegistrationController extends AbstractController
         if ($this->getUser()) {
             return $this->redirectToRoute('app_index');
         }
-        
+
         if ($user->getRegistrationToken() !== $token) {
             $this->addFlash('danger', 'The token is invalid.');
             return $this->redirectToRoute('app_register');

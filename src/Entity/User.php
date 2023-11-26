@@ -77,6 +77,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->registrationTokenLifeTime = (new DateTime('now'))->add(new DateInterval($this->tokenLifetime));
     }
 
+    public function isRecruiter()
+    {
+        return in_array('ROLE_RECRUITER', $this->roles);
+    }
+
+    public function isCandidate()
+    {
+        return in_array('ROLE_CANDIDATE', $this->roles);
+    }
+
     public function getId(): ?int
     {
         return $this->id;

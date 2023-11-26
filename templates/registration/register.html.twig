@@ -114,11 +114,22 @@
 					</div>
 				</div>
 
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Role</label>
+						<select name="role" class="category nice-select form-control" id="roleSelect">
+							<option selected></option>
+							{% for role in roles %}
+							<option value="{{ role }}">{{ role }}</option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
 
-				<div class="col-md-12 mt-4">
-					<div class="form-group text-center">
+				<div class="col-md-6">
+					<div class="form-group">
 						<label>Phone Number</label>
-						<div class="input-group m-auto w-50">
+						<div class="input-group">
 							<div class="input-group-prepend">
 								<span class="input-group-text" id="countryEmoji" style="height: 50px;">🛸</span>
 							</div>
@@ -127,7 +138,6 @@
 						</div>
 					</div>
 				</div>
-
 
 				<div class="col-md-12">
 					<div class="form-group d-flex align-items-center justify-content-center">
@@ -145,16 +155,16 @@
 					</div>
 				</div>
 
+				<div class="col-md-12 text-center">
+					<button type="submit" class="post-btn">
+						Sign Up
+					</button>
+				</div>
 			</div>
 
-			<div class="col-md-12 text-center">
-				<button type="submit" class="post-btn">
-					Sign Up
-				</button>
-			</div>
+
+		</form>
 	</div>
-	</form>
-</div>
 </div>
 <!-- Sign up Section End -->
 
