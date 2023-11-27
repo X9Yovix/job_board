@@ -52,7 +52,7 @@ class RegistrationController extends AbstractController
         $countries = $query->getResult();
         $errors = [];
         $roles = ['RECRUITER', 'CANDIDATE'];
-        
+
         if ($request->isMethod(Request::METHOD_POST)) {
             $data = $request->request->all();
 
@@ -110,6 +110,7 @@ class RegistrationController extends AbstractController
             $user->setState($data['state']);
             $user->setCity($data['city']);
             $user->setPhoneNumber('(' . $data['phoneCode'] . ') ' . $data['phoneNumber']);
+            $user->setRegistrationTokenLifeTime(new \DateTime('+1 min'));
             $user->setGender($data['gender']);
 
             if ($data['role'] === 'RECRUITER') {
@@ -162,8 +163,12 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/verify/{token}/{id<\d+>}', name: 'account_verification')]
-    public function account_verification(string $token, User $user): Response
-    {
+    public function account_verification(
+        string $token,
+        User $user,
+        TokenGeneratorInterface $tokenGenInterface,
+        MailerService $mailerService
+    ): Response {
         if ($this->getUser()) {
             return $this->redirectToRoute('app_index');
         }
@@ -180,7 +185,24 @@ class RegistrationController extends AbstractController
 
         if ($user->getRegistrationTokenLifeTime() < new \DateTime()) {
             $this->addFlash('danger', 'The token has expired.');
-            return $this->redirectToRoute('app_register');
+            $tokenRegistration = $tokenGenInterface->generateToken();
+            $user->setRegistrationToken($tokenRegistration);
+            $user->setRegistrationTokenLifeTime(new \DateTime($_ENV['REGISTRATION_TOKEN_LIFETIME']));
+            $this->entityManager->flush();
+
+            $mailerService->sendEmail(
+                $user->getEmail(),
+                'Please confirm your account',
+                'confirmation_email.html.twig',
+                [
+                    'token' => $tokenRegistration,
+                    'user' => $user,
+                    'lifeTimeToken' => $user->getRegistrationTokenLifeTime()->format('H:i:s d-m-Y')
+                ]
+            );
+
+            $this->addFlash('info', 'A new token has been sent to your email.');
+            return $this->redirectToRoute('app_login');
         }
 
         $user->setVerified(true);
