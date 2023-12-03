@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use DateInterval;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -70,12 +72,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     private $tokenLifetime;
 
+    #[ORM\OneToMany(mappedBy: 'recruiter', targetEntity: Announcement::class)]
+    private Collection $announcements;
+
     public function __construct()
     {
         $this->verified = false;
         $this->tokenLifetime = $_ENV['REGISTRATION_TOKEN_LIFETIME'];
         $this->registrationTokenLifeTime = (new DateTime('now'))->add(new DateInterval($this->tokenLifetime));
+        $this->announcements = new ArrayCollection();
     }
+
+    /* public function __toString(): string
+    {
+        return $this->email ?? '';
+    } */
 
     public function isRecruiter()
     {
@@ -297,6 +308,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setJobTitle(string $jobTitle): static
     {
         $this->jobTitle = $jobTitle;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Announcement>
+     */
+    public function getAnnouncements(): Collection
+    {
+        return $this->announcements;
+    }
+
+    public function addAnnouncement(Announcement $announcement): static
+    {
+        if (!$this->announcements->contains($announcement)) {
+            $this->announcements->add($announcement);
+            $announcement->setRecruiter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnnouncement(Announcement $announcement): static
+    {
+        if ($this->announcements->removeElement($announcement)) {
+            // set the owning side to null (unless already changed)
+            if ($announcement->getRecruiter() === $this) {
+                $announcement->setRecruiter(null);
+            }
+        }
 
         return $this;
     }

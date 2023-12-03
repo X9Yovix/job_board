@@ -2568,7 +2568,7 @@ h3 {
 
 .page-title h2 {
   /* added */
-  font-size: 35px; 
+  font-size: 35px;
   /* font-size: 45px; */
   color: #ffffff;
   font-weight: 700;
@@ -4891,14 +4891,21 @@ h3 {
   background-color: #f9f6f6;
 }
 
+.register .select2-container--default .select2-selection--single {
+  border-radius: 50px !important;
+}
+
 .select2-container--default .select2-selection--single {
   width: 100%;
   font-size: 1.2em;
   position: relative;
   height: 50px;
-  border-radius: 50px !important;
   padding: 20px 20px;
   background: #f9f6f6;
+}
+
+.register .select2-container--default .select2-selection--single .select2-selection__arrow {
+  border-radius: 20px !important;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__arrow {
@@ -4915,7 +4922,6 @@ h3 {
   top: 0px !important;
   right: 0px !important;
   width: 31px !important;
-  border-radius: 20px !important;
   color: #fff !important;
   font-size: 1.3em !important;
   padding: 4px 20px !important;
@@ -4944,4 +4950,8 @@ h3 {
 
 .check-your-email.page-title::before {
   background-color: #000;
+}
+
+.select2-container--default .select2-selection--multiple {
+  padding-bottom: 12px !important;
 }

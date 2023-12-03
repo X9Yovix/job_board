@@ -1,0 +1,106 @@
+{# {{ form_start(form) }}
+{{ form_widget(form) }}
+<button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }} #}
+{{ form_start(form, { 'attr': {'class': 'job-post-from'} }) }}
+{{ form_errors(form) }}
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            {{
+            form_row(form.title, {
+            'label': 'Job Title',
+            'attr': {'class': 'form-control'}
+            }) }}
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            {{
+            form_row(form.companyName, {
+            'label': 'Company Name',
+            'attr': {'class': 'form-control'}
+            }) }}
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            {{
+            form_row(form.location, {
+            'label': 'Location',
+            'attr': {'class': 'form-control'}
+            }) }}
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            {{
+            form_row(form.salary, {
+            'label': 'Salary (Optional)',
+            'attr': {'class': 'form-control'}
+            }) }}
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Job Type</label>
+            {{ form_widget(form.jobType, {
+            'attr': {
+            'class': 'category nice-select form-control',
+            }
+            }) }}
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="keywords">Job Keywords</label>
+            {{ form_widget(form.keywords, {
+            'attr': {
+            'class': 'form-control',
+            }
+            }) }}
+            {# <select class="form-control" multiple="multiple" id="keywords" name="keywords[]">
+                {% for keyword in keywords %}
+                <option value="{{ keyword.id }}">{{ keyword.name }}</option>
+                {% endfor %}
+            </select> #}
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="{{ form.description.vars.id }}">Job Description</label>
+            {{ form_widget(form.description, {
+            'attr': {
+            'class': 'form-control description-area',
+            'required': 'required',
+            'rows':6
+            }
+            }) }}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label>Job Requirements</label>
+            {{ form_widget(form.requirements, {
+            'attr': {
+            'class': 'form-control description-area',
+            'required': 'required',
+            'rows':6
+            }
+            }) }}
+        </div>
+    </div>
+
+
+
+    <div class="col-md-12 text-center">
+        <button class="post-btn">{{ button_label|default('Post A Job') }}</button>
+    </div>
+</div>
+{{ form_end(form) }}

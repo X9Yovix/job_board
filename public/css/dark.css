@@ -702,3 +702,25 @@ Default CSS
 .theme-dark .check-your-email.page-title::before {
   background-color: #000;
 }
+
+.theme-dark .select2-container--default .select2-selection--multiple {
+  background-color: #000 !important;
+  color: white !important;
+  padding-bottom: 12px !important;
+}
+
+.theme-dark .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
+  border: 1px solid #aaa;
+}
+
+.theme-dark .select2-container--default.select2-container--focus .select2-selection--multiple {
+  border: 1px solid #aaa;
+}
+
+.theme-dark .select2-selection__choice__display {
+  color: #000;
+}
+
+.theme-dark .select2-search--inline .select2-search__field {
+  color: #fff;
+}

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Announcement{% endblock %}
+
+{% block body %}
+
+<div class="job-post ptb-100">
+    <div class="container">
+        <h2>Create new Announcement</h2>
+        {{ include('announcement/_form.html.twig') }}
+        <a href="{{ path('app_announcement_index') }}">back to list</a>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    $(document).ready(function () {
+        $('#announcement_keywords').select2({
+            tags: true,
+            tokenSeparators: [',', ' '],
+        });
+    });
+</script>
+{% endblock %}
