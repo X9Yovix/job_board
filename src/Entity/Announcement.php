@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\AnnouncementRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Keyword;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\AnnouncementRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: AnnouncementRepository::class)]
 class Announcement
@@ -35,7 +36,7 @@ class Announcement
     #[ORM\JoinColumn(nullable: false)]
     private ?User $recruiter = null;
 
-    #[ORM\ManyToMany(targetEntity: Keyword::class, mappedBy: 'announcement', fetch: 'EAGER')]
+    #[ORM\ManyToMany(targetEntity: Keyword::class, mappedBy: 'announcement', cascade: ['persist'], fetch: "EAGER")]
     private Collection $keywords;
 
     #[ORM\Column(length: 255)]

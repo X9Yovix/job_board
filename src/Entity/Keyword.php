@@ -18,7 +18,7 @@ class Keyword
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: Announcement::class, inversedBy: 'keywords')]
+    #[ORM\ManyToMany(targetEntity: Announcement::class, inversedBy: 'keywords', cascade: ['persist'], fetch: "EAGER")]
     private Collection $announcement;
 
     public function __construct()

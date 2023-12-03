@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Exception;
 use App\Entity\Keyword;
 use App\Entity\Announcement;
 use App\Form\AnnouncementType;
@@ -31,12 +32,12 @@ class AnnouncementController extends AbstractController
         $announcement = new Announcement();
         $form = $this->createForm(AnnouncementType::class, $announcement);
         $form->handleRequest($request);
-        dd($form->getData());
-        die;
+        /* dd($form->getData());
+        die; */
         if ($form->isSubmitted() && $form->isValid()) {
-            //dd($form->getData());
-            
-          /*   $submittedKeywords = $request->get('keywords');
+            /* dd($form->getData());
+            die; */
+            /*   $submittedKeywords = $request->get('keywords');
             $keywordEntity = null;
 
             foreach ($submittedKeywords as $val) {
@@ -53,25 +54,49 @@ class AnnouncementController extends AbstractController
                 //dd($keywordEntity);
                 $announcement->addKeyword($keywordEntity);
             } */
+            /* dd($form->getData()->getKeywords());
+            die; */
+            /* dump($form->getData());
+            die; */
 
             $user = $this->getUser();
             $announcement->setRecruiter($user);
 
+
+            $keywordObj = new Keyword();
+            foreach ($form->getData()->getKeywords() as $keyword) {
+
+                /* $keywordEntity = $entityManager->getReference(Keyword::class, $keyword->getId());
+                $entityManager->persist($keywordEntity); */
+
+                //dd($keywordEntity);
+                
+                /* $keywordObj = new Keyword();
+                $keywordObj->setId($keyword->getId());
+                $keywordObj->setName($keyword->getName());
+                $entityManager->persist($keywordObj);  */
+                $announcement->addKeyword($keyword);
+                $keyword->addAnnouncement($announcement);
+                //$entityManager->persist($announcement);
+                //$entityManager->persist($announcement);
+
+            }
             $entityManager->persist($announcement);
             $entityManager->flush();
+
 
             return $this->redirectToRoute('app_announcement_index', [], Response::HTTP_SEE_OTHER);
         }/*   else {
             dd($form->getErrors(true, false));
         } */
-        $query = $entityManager->createQueryBuilder()
+        /* $query = $entityManager->createQueryBuilder()
             ->select('k.id, k.name')
             ->from(Keyword::class, 'k')
             ->getQuery();
-        $keywords = $query->getResult();
+        $keywords = $query->getResult(); */
 
         return $this->render('announcement/new.html.twig', [
-            'keywords' => $keywords,
+            /* 'keywords' => $keywords, */
             'announcement' => $announcement,
             'form' => $form,
         ]);

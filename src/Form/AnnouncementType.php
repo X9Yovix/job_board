@@ -36,6 +36,7 @@ class AnnouncementType extends AbstractType
                 [
                     'class' => Keyword::class,
                     'multiple' => true,
+                    'choice_label' => 'name',
                 ]
             )
             ->add('jobType');

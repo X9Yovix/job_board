@@ -24,21 +24,14 @@ class KeywordFormEventSubscriber implements EventSubscriberInterface
     {
         $data = $event->getData();
 
-        //$form = $event->getForm();
-        //dump($data);
-        //dump($form);
-        /* $form = $event->getForm(); */
-        /* dump($data);
-        dump($data['keywords']); */
         if (isset($data['keywords'])) {
             $keywords = $data['keywords'];
             $existingKeywords = [];
-            $newKeywords = [];
 
             foreach ($keywords as $value) {
                 if (is_numeric($value)) {
-                    //$keyword = $this->entityManager->getRepository(Keyword::class)->findOneBy(['id' => $value]);
                     $existingKeywords[] = $value;
+                    //$existingKeywords[] = $this->entityManager->getReference(Keyword::class, $value);
                 } else {
                     $newKeyword = new Keyword();
                     $newKeyword->setName(ucwords($value));
@@ -46,21 +39,9 @@ class KeywordFormEventSubscriber implements EventSubscriberInterface
                     $this->entityManager->flush();
 
                     $existingKeywords[] = strval($newKeyword->getId());
-                    //$newKeywords[] = $newKeyword;
                 }
             }
 
-
-            /* dump($existingKeywords);
-            dump($newKeywords);
-            $test = array_merge($existingKeywords, $newKeywords);
-            dump($test);
-            die; */
-            //$data['keywords'] = array_merge($existingKeywords, $newKeywords);
-            // Fetch existing keywords from the Announcement entity
-            //$existingKeywords = $event->getForm()->getData()->getKeywords();
-
-            //$data['keywords'] = array_merge($existingKeywords, $newKeywords);
             $data['keywords'] = $existingKeywords;
             $event->setData($data);
         }
