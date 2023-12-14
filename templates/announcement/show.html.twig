@@ -1,46 +1,188 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Announcement{% endblock %}
+{% block title %}
+Announcement
+{% endblock %}
 
 {% block body %}
-    <h1>Announcement</h1>
+<!-- Job Details Section Start -->
+<section class="job-details ptb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="job-details-text">
+                            <div class="job-card">
+                                <div class="row align-items-center">
+                                    <div class="col-md-2">
+                                        <div class="company-logo">
+                                            <img <img
+                                                src="{{ asset('uploads/imgs/' ~ announcement.recruiter.company.logo) }}"
+                                                alt="logo" width="100px" height="100px" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="job-info">
+                                            <h3>{{ announcement.title }}</h3>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ announcement.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ announcement.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ announcement.description }}</td>
-            </tr>
-            <tr>
-                <th>Requirements</th>
-                <td>{{ announcement.requirements }}</td>
-            </tr>
-            <tr>
-                <th>Location</th>
-                <td>{{ announcement.location }}</td>
-            </tr>
-            <tr>
-                <th>Salary</th>
-                <td>{{ announcement.salary }}</td>
-            </tr>
-            <tr>
-                <th>CompanyName</th>
-                <td>{{ announcement.companyName }}</td>
-            </tr>
-        </tbody>
-    </table>
+                                            <span>
+                                                <i class="bx bx-paper-plane"></i>
+                                                Apply Before: {{ announcement.deadline|date('F d, Y H:i') }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-    <a href="{{ path('app_announcement_index') }}">back to list</a>
+                            <div class="details-text">
+                                <h3>Description</h3>
+                                <p>{{ announcement.description }}</p>
+                            </div>
 
-    <a href="{{ path('app_announcement_edit', {'id': announcement.id}) }}">edit</a>
+                            <div class="details-text">
+                                <h3>Requirements</h3>
+                                <p>{{ announcement.requirements }}</p>
+                            </div>
 
-    {{ include('announcement/_delete_form.html.twig') }}
+                            <div class="details-text">
+                                <h3>Job Details</h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td><span><i class='bx bx-filter-alt'></i> Company</span></td>
+                                                    <td>{{ announcement.recruiter.company.name }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><span><i class="bx bx-location-plus"></i> Location</span></td>
+                                                    <td>{{ announcement.recruiter.company.address }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td><span><i class='bx bx-briefcase'></i> Job Type</span></td>
+                                                    <td>{{ announcement.jobType }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><span>Salary</span></td>
+                                                    <td>{{ announcement.salary }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="theme-btn">
+                                <a href="#" class="default-btn">
+                                    Apply Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="job-sidebar">
+                    <h3>Posted By</h3>
+                    <div class="posted-by">
+                        <img src="assets/img/client-1.png" alt="client image">
+                        <h4>{{ announcement.recruiter.firstName }} {{ announcement.recruiter.lastName }}</h4>
+                        <span>{{ announcement.recruiter.jobTitle }}</span>
+                    </div>
+                </div>
+
+                <div class="job-sidebar">
+                    <h3>Location</h3>
+                    {% if announcement.recruiter.company.address %}
+
+                    {% set addressForUrl = announcement.recruiter.company.address|replace({' ': '+'}) %}
+                    {% set osmGeocodingUrl = "https://nominatim.openstreetmap.org/search?q=" ~ addressForUrl ~
+                    "&format=json&limit=1" %}
+
+                    <div id="map" data-lat="{{ announcement.recruiter.company.latitude }}"
+                        data-lon="{{ announcement.recruiter.company.longitude }}"
+                        data-address="{{ announcement.recruiter.company.name }}" style="height: 300px;">
+                    </div>
+                    {% else %}
+                    <p>No address available</p>
+                    {% endif %}
+                </div>
+
+                <div class="job-sidebar">
+                    <h3>Keywords</h3>
+                    <ul>
+                        {# {{ dump(announcement.keywords)}} #}
+                        {% for key in announcement.keywords %}
+                        <li>
+                            <a href="#">{{key}}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="job-sidebar social-share">
+                    <h3>Share In</h3>
+                    <ul>
+                        <li>
+                            <a href="#" target="_blank">
+                                <i class="bx bxl-facebook"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">
+                                <i class="bx bxl-twitter"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">
+                                <i class="bx bxl-pinterest"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">
+                                <i class="bx bxl-linkedin"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Job Details Section End -->
+<a href="{{ path('app_announcement_index') }}">back to list</a>
+
+<a href="{{ path('app_announcement_edit', { id: announcement.id }) }}">edit</a>
+
+{{ include('announcement/_delete_form.html.twig') }}
+{% endblock %}
+{% block javascripts %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var mapElement = document.getElementById('map');
+        var lat = mapElement.getAttribute('data-lat');
+        var lon = mapElement.getAttribute('data-lon');
+        var address = mapElement.getAttribute('data-address');
+
+        var map = L.map('map').setView([lat, lon], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        L.marker([lat, lon]).addTo(map)
+            .bindPopup(address).openPopup();
+    });
+</script>
 {% endblock %}

@@ -75,6 +75,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'recruiter', targetEntity: Announcement::class)]
     private Collection $announcements;
 
+    #[ORM\ManyToOne(inversedBy: 'recruiter')]
+    private ?Company $company = null;
+
     public function __construct()
     {
         $this->verified = false;
@@ -85,8 +88,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /* public function __toString(): string
     {
-        return $this->email ?? '';
+        return $this->firstName . $this->lastName . $this->jobTitle ?? '';
     } */
+    
 
     public function isRecruiter()
     {
@@ -338,6 +342,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $announcement->setRecruiter(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCompany(): ?Company
+    {
+        return $this->company;
+    }
+
+    public function setCompany(?Company $company): static
+    {
+        $this->company = $company;
 
         return $this;
     }

@@ -11,6 +11,7 @@ use App\Repository\AnnouncementRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -32,71 +33,20 @@ class AnnouncementController extends AbstractController
         $announcement = new Announcement();
         $form = $this->createForm(AnnouncementType::class, $announcement);
         $form->handleRequest($request);
-        /* dd($form->getData());
-        die; */
         if ($form->isSubmitted() && $form->isValid()) {
-            /* dd($form->getData());
-            die; */
-            /*   $submittedKeywords = $request->get('keywords');
-            $keywordEntity = null;
-
-            foreach ($submittedKeywords as $val) {
-                if (is_numeric($val)) {
-                    $existingKeyword = $entityManager->getRepository(Keyword::class)->findOneBy(['id' => $val]);
-                    if ($existingKeyword) {
-                        $keywordEntity = $existingKeyword;
-                    }
-                } else {
-                    $keywordEntity = new Keyword();
-                    $keywordEntity->setName(ucwords($val));
-                    $entityManager->persist($keywordEntity);
-                }
-                //dd($keywordEntity);
-                $announcement->addKeyword($keywordEntity);
-            } */
-            /* dd($form->getData()->getKeywords());
-            die; */
-            /* dump($form->getData());
-            die; */
-
             $user = $this->getUser();
             $announcement->setRecruiter($user);
-
-
-            $keywordObj = new Keyword();
             foreach ($form->getData()->getKeywords() as $keyword) {
-
-                /* $keywordEntity = $entityManager->getReference(Keyword::class, $keyword->getId());
-                $entityManager->persist($keywordEntity); */
-
-                //dd($keywordEntity);
-                
-                /* $keywordObj = new Keyword();
-                $keywordObj->setId($keyword->getId());
-                $keywordObj->setName($keyword->getName());
-                $entityManager->persist($keywordObj);  */
                 $announcement->addKeyword($keyword);
                 $keyword->addAnnouncement($announcement);
-                //$entityManager->persist($announcement);
-                //$entityManager->persist($announcement);
-
             }
+            $announcement->setStatus('active');
+            /* $announcement->addC($user->getCompany()); */
             $entityManager->persist($announcement);
             $entityManager->flush();
-
-
             return $this->redirectToRoute('app_announcement_index', [], Response::HTTP_SEE_OTHER);
-        }/*   else {
-            dd($form->getErrors(true, false));
-        } */
-        /* $query = $entityManager->createQueryBuilder()
-            ->select('k.id, k.name')
-            ->from(Keyword::class, 'k')
-            ->getQuery();
-        $keywords = $query->getResult(); */
-
+        }
         return $this->render('announcement/new.html.twig', [
-            /* 'keywords' => $keywords, */
             'announcement' => $announcement,
             'form' => $form,
         ]);
@@ -113,22 +63,35 @@ class AnnouncementController extends AbstractController
     #[Route('/{id}/edit', name: 'app_announcement_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Announcement $announcement, EntityManagerInterface $entityManager): Response
     {
+        $originalKeywords = new ArrayCollection();
+
+        foreach ($announcement->getKeywords() as $keyword) {
+            $originalKeywords->add($keyword);
+        }
+
         $form = $this->createForm(AnnouncementType::class, $announcement);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($originalKeywords as $originalKeyword) {
+                if (!$announcement->getKeywords()->contains($originalKeyword)) {
+                    $originalKeyword->removeAnnouncement($announcement);
+                    $entityManager->persist($originalKeyword);
+                }
+            }
+
+            foreach ($form->getData()->getKeywords() as $keyword) {
+                $announcement->addKeyword($keyword);
+                $keyword->addAnnouncement($announcement);
+            }
+
+            $entityManager->persist($announcement);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_announcement_index', [], Response::HTTP_SEE_OTHER);
         }
-        $query = $entityManager->createQueryBuilder()
-            ->select('k.id, k.name')
-            ->from(Keyword::class, 'k')
-            ->getQuery();
-        $keywords = $query->getResult();
 
         return $this->render('announcement/edit.html.twig', [
-            'keywords' => $keywords,
             'announcement' => $announcement,
             'form' => $form,
         ]);

@@ -27,7 +27,7 @@ class Announcement
     private ?string $requirements = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $location = null;
+    private ?string $experince = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 4, nullable: true)]
     private ?string $salary = null;
@@ -39,16 +39,34 @@ class Announcement
     #[ORM\ManyToMany(targetEntity: Keyword::class, mappedBy: 'announcement', cascade: ['persist'], fetch: "EAGER")]
     private Collection $keywords;
 
-    #[ORM\Column(length: 255)]
-    private ?string $companyName = null;
-
     #[ORM\ManyToOne(inversedBy: 'announcements')]
     #[ORM\JoinColumn(nullable: false)]
     private ?JobType $jobType = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $deadline = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $status = null;
+
     public function __construct()
     {
         $this->keywords = new ArrayCollection();
+    }
+
+    #[ORM\PrePersist]
+    public function setInitialStatus(): void
+    {
+        $this->status = 'active';
+    }
+
+    public function getStatus(): ?string
+    {
+        if ($this->getDeadline() && $this->getDeadline() < new \DateTime()) {
+            $this->status = 'ended';
+        }
+
+        return $this->status;
     }
 
     public function getId(): ?int
@@ -92,14 +110,14 @@ class Announcement
         return $this;
     }
 
-    public function getLocation(): ?string
+    public function getExperince(): ?string
     {
-        return $this->location;
+        return $this->experince;
     }
 
-    public function setLocation(string $location): static
+    public function setExperince(string $experince): static
     {
-        $this->location = $location;
+        $this->experince = $experince;
 
         return $this;
     }
@@ -155,18 +173,6 @@ class Announcement
         return $this;
     }
 
-    public function getCompanyName(): ?string
-    {
-        return $this->companyName;
-    }
-
-    public function setCompanyName(string $companyName): static
-    {
-        $this->companyName = $companyName;
-
-        return $this;
-    }
-
     public function getJobType(): ?JobType
     {
         return $this->jobType;
@@ -175,6 +181,30 @@ class Announcement
     public function setJobType(?JobType $jobType): static
     {
         $this->jobType = $jobType;
+
+        return $this;
+    }
+
+    public function getDeadline(): ?\DateTimeInterface
+    {
+        return $this->deadline;
+    }
+
+    public function setDeadline(\DateTimeInterface $deadline): static
+    {
+        $this->deadline = $deadline;
+
+        return $this;
+    }
+
+    /* public function getStatus(): ?string
+    {
+        return $this->status;
+    } */
+
+    public function setStatus(string $status): static
+    {
+        $this->status = $status;
 
         return $this;
     }

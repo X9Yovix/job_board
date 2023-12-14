@@ -25,9 +25,13 @@ class AnnouncementType extends AbstractType
             ->add('title')
             ->add('description')
             ->add('requirements')
-            ->add('location')
+            ->add('experince')
             ->add('salary')
-            ->add('companyName')
+            /* ->add('companyName') */
+            ->add('deadline')
+            /* ->add('deadline', DateType::class, [
+                'widget' => 'single_text',
+            ]) */
             /* ->add('recruiter') */
             /* ->add('keywords') */
             ->add(
