@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Job List{% endblock %}
+
+{% block body %}
+<!-- Job Section End -->
+<section class="job-style-two job-list-section pt-100 pb-70">
+    <div class="container">
+        <div class="section-title text-center">
+            <h2>Jobs You May Be Interested In</h2>
+        </div>
+        <div class="row">
+            {% for announcement in announcements %}
+            <div class="col-lg-12">
+                <div class="job-card-two">
+                    <div class="row align-items-center">
+                        <div class="col-md-1">
+                            <div class="company-logo">
+                                <img src="{{ asset('uploads/imgs/' ~ announcement.recruiter.company.logo) }}" alt="logo"
+                                    width="60px" height="60px">
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="job-info">
+                                <h3>
+                                    <a
+                                        href="{{ path('app_announcement_show', {'id': announcement.id}) }}">{{announcement.title}}</a>
+                                </h3>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div>
+                                            <span>{{ announcement.jobType }}</span>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-md-2">
+                                        <div>
+                                            <i class='bx bx-briefcase'></i>
+                                            {% if announcement.salary %}
+                                                {{ announcement.salary|number_format(2, '.', ' ') }} DT
+                                            {% else %}
+                                                Negotiable
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-md-3">
+                                        <div>
+                                            <i class='bx bx-location-plus'></i>
+                                            {{ announcement.recruiter.company.address }}
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-md-4">
+                                        <div>
+                                            <i class='bx bx-stopwatch'></i>
+                                            Posted
+                                            {% set currentDate = date('now') %}
+                                            {% set createdAt = announcement.createdAt %}
+                                            {% set dateDiff = currentDate.diff(createdAt) %}
+                                
+                                            {% set daysDiff = dateDiff.days %}
+                                            {% set hoursDiff = dateDiff.h %}
+                                            {% set minutesDiff = dateDiff.i %}
+                                
+                                            {% if daysDiff > 0 %}
+                                                {{ daysDiff }} {{ daysDiff == 1 ? 'day' : 'days' }}
+                                            {% endif %}
+                                
+                                            {% if hoursDiff > 0 %}
+                                                {{ hoursDiff }} {{ hoursDiff == 1 ? 'hour' : 'hours' }}
+                                            {% endif %}
+                                
+                                            {% if minutesDiff > 0 %}
+                                                {{ minutesDiff }} {{ minutesDiff == 1 ? 'minute' : 'minutes' }}
+                                            {% endif %}
+                                            ago
+                                
+                                            {% if daysDiff == 0 and hoursDiff == 0 and minutesDiff == 0 %}
+                                                just now
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="theme-btn text-end mt-3">
+                                <a href="{{ path('app_announcement_show', {'id': announcement.id}) }}"
+                                    class="default-btn">
+                                    Browse Job
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="d-flex justify-content-center mt-4">
+            {{ knp_pagination_render(announcements) }}
+        </div>
+        {# <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                        <i class='bx bx-chevrons-left bx-fade-left'></i>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link active" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">
+                        <i class='bx bx-chevrons-right bx-fade-right'></i>
+                    </a>
+                </li>
+            </ul>
+        </nav> #}
+    </div>
+</section>
+<!-- Job Section End -->
+
+{% endblock %}

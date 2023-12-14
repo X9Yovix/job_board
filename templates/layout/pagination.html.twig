@@ -1,0 +1,60 @@
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        {% if current > 1 %}
+        <li class="page-item">
+            <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): (current - 1)})) }}"
+                tabindex="-1">
+                <i class='bx bx-chevrons-left bx-fade-left'></i>
+            </a>
+        </li>
+        {% endif %}
+
+        {% for page in pagesInRange %}
+        {% if page != current %}
+        <li class="page-item">
+            <a href="{{ path(route, query|merge({(pageParameterName): page})) }}" class="page-link">{{ page }}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <span class="page-link active current">{{ page }}</span>
+        </li>
+        {% endif %}
+        {% endfor %}
+
+        {% if current < pagesInRange|length %} <li class="page-item">
+            <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): (current + 1)})) }}"
+                tabindex="-1">
+                <i class='bx bx-chevrons-right bx-fade-right'></i>
+            </a>
+            </li>
+            {% endif %}
+    </ul>
+</nav>
+
+
+{# <div class="pagination">
+    <ul class="pagination-list">
+        {% for page in pagination.pagesInRange %}
+        <li class="pagination-item {% if page == pagination.current %}active{% endif %}">
+            <a href="{{ path(route, query|merge({(pageParameterName): page})) }}" class="pagination-link">{{ page }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div> #}
+
+
+{# <div class="pagination">
+    <ul class="pagination-list">
+        {% for page in pagesInRange %}
+        {% if page != current %}
+        <li class="pagination-item">
+            <a href="{{ path(route, query|merge({(pageParameterName): page})) }}" class="pagination-link">{{ page }}</a>
+        </li>
+        {% else %}
+        <li class="pagination-item active">
+            <span class="pagination-link current">{{ page }}</span>
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+</div> #}

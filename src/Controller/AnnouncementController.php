@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use Exception;
-use App\Entity\Keyword;
+use DateTimeImmutable;
 use App\Entity\Announcement;
 use App\Form\AnnouncementType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AnnouncementRepository;
 use Symfony\Component\HttpFoundation\Request;
+
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -28,7 +28,10 @@ class AnnouncementController extends AbstractController
     }
 
     #[Route('/new', name: 'app_announcement_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        ): Response
     {
         $announcement = new Announcement();
         $form = $this->createForm(AnnouncementType::class, $announcement);
@@ -41,7 +44,7 @@ class AnnouncementController extends AbstractController
                 $keyword->addAnnouncement($announcement);
             }
             $announcement->setStatus('active');
-            /* $announcement->addC($user->getCompany()); */
+            $announcement->setCreatedAt(new DateTimeImmutable());
             $entityManager->persist($announcement);
             $entityManager->flush();
             return $this->redirectToRoute('app_announcement_index', [], Response::HTTP_SEE_OTHER);
