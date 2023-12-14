@@ -164,8 +164,10 @@ Announcement
 
 {{ include('announcement/_delete_form.html.twig') }}
 {% endblock %}
-{% block javascripts %}
+{% block stylesheets %}
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+{% endblock %}
+{% block javascripts %}
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -178,7 +180,7 @@ Announcement
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
-            attribution: '© OpenStreetMap contributors'
+            attribution: '© TEKUP Job Board'
         }).addTo(map);
 
         L.marker([lat, lon]).addTo(map)
