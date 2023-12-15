@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Auth;
 
 use App\Entity\User;
 use App\Form\ChangePasswordFormType;
@@ -52,7 +52,7 @@ class ResetPasswordController extends AbstractController
             );
         }
 
-        return $this->render('reset_password/request.html.twig', [
+        return $this->render('auth/reset_password/request.html.twig', [
             'requestForm' => $form->createView(),
         ]);
     }
@@ -72,7 +72,7 @@ class ResetPasswordController extends AbstractController
             $resetToken = $this->resetPasswordHelper->generateFakeResetToken();
         }
 
-        return $this->render('reset_password/check_email.html.twig', [
+        return $this->render('auth/reset_password/check_email.html.twig', [
             'resetToken' => $resetToken,
         ]);
     }
@@ -135,7 +135,7 @@ class ResetPasswordController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        return $this->render('reset_password/reset.html.twig', [
+        return $this->render('auth/reset_password/reset.html.twig', [
             'resetForm' => $form->createView(),
         ]);
     }

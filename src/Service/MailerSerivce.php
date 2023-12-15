@@ -20,7 +20,7 @@ class MailerService
                 ->from(new Address($_ENV['MAILER_FROM'], $_ENV['APP_NAME']))
                 ->to(new Address($to))
                 ->subject($subject)
-                ->htmlTemplate("mails/$template")
+                ->htmlTemplate("layout/mails/$template")
                 ->context($context);
 
             $this->mailer->send($email);

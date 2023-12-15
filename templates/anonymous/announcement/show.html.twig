@@ -18,7 +18,7 @@ Announcement
                                     <div class="col-md-2">
                                         <div class="company-logo">
                                             <img <img
-                                                src="{{ asset('uploads/imgs/' ~ announcement.recruiter.company.logo) }}"
+                                                src="{{ asset('uploads/imgs/' ~ announcement.company.logo) }}"
                                                 alt="logo" width="100px" height="100px" />
                                         </div>
                                     </div>
@@ -53,11 +53,11 @@ Announcement
                                             <tbody>
                                                 <tr>
                                                     <td><span><i class='bx bx-filter-alt'></i> Company</span></td>
-                                                    <td>{{ announcement.recruiter.company.name }}</td>
+                                                    <td>{{ announcement.company.name }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td><span><i class="bx bx-location-plus"></i> Location</span></td>
-                                                    <td>{{ announcement.recruiter.company.address }}</td>
+                                                    <td>{{ announcement.company.address }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -101,15 +101,15 @@ Announcement
 
                 <div class="job-sidebar">
                     <h3>Location</h3>
-                    {% if announcement.recruiter.company.address %}
+                    {% if announcement.company.address %}
 
-                    {% set addressForUrl = announcement.recruiter.company.address|replace({' ': '+'}) %}
+                    {% set addressForUrl = announcement.company.address|replace({' ': '+'}) %}
                     {% set osmGeocodingUrl = "https://nominatim.openstreetmap.org/search?q=" ~ addressForUrl ~
                     "&format=json&limit=1" %}
 
-                    <div id="map" data-lat="{{ announcement.recruiter.company.latitude }}"
-                        data-lon="{{ announcement.recruiter.company.longitude }}"
-                        data-address="{{ announcement.recruiter.company.name }}" style="height: 300px;">
+                    <div id="map" data-lat="{{ announcement.company.latitude }}"
+                        data-lon="{{ announcement.company.longitude }}"
+                        data-address="{{ announcement.company.name }}" style="height: 300px;">
                     </div>
                     {% else %}
                     <p>No address available</p>
@@ -119,7 +119,6 @@ Announcement
                 <div class="job-sidebar">
                     <h3>Keywords</h3>
                     <ul>
-                        {# {{ dump(announcement.keywords)}} #}
                         {% for key in announcement.keywords %}
                         <li>
                             <a href="#">{{key}}</a>
@@ -158,11 +157,8 @@ Announcement
     </div>
 </section>
 <!-- Job Details Section End -->
-<a href="{{ path('app_announcement_index') }}">back to list</a>
+<a href="{{ path('app_announcements') }}">back to list</a>
 
-<a href="{{ path('app_announcement_edit', { id: announcement.id }) }}">edit</a>
-
-{{ include('announcement/_delete_form.html.twig') }}
 {% endblock %}
 {% block stylesheets %}
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />

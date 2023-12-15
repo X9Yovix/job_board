@@ -1,7 +1,8 @@
 <?php
 
+namespace App\Form;
+
 use App\Entity\Keyword;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Doctrine\ORM\EntityManagerInterface;
@@ -31,7 +32,6 @@ class KeywordFormEventSubscriber implements EventSubscriberInterface
             foreach ($keywords as $value) {
                 if (is_numeric($value)) {
                     $existingKeywords[] = $value;
-                    //$existingKeywords[] = $this->entityManager->getReference(Keyword::class, $value);
                 } else {
                     $newKeyword = new Keyword();
                     $newKeyword->setName(ucwords($value));

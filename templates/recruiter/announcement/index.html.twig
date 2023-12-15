@@ -33,7 +33,7 @@ Announcement index
       <td>{{ announcement.salary }}</td>
       {# <td>{{ announcement.companyName }}</td> #}
       <td>
-        <a href="{{ path('app_announcement_show', { id: announcement.id }) }}">show</a>
+        <a href="{{ path('app_announcement_show', { slug: announcement.slug }) }}">show</a>
         <a href="{{ path('app_announcement_edit', { id: announcement.id }) }}">edit</a>
       </td>
     </tr>

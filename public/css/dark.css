@@ -724,3 +724,18 @@ Default CSS
 .theme-dark .select2-search--inline .select2-search__field {
   color: #fff;
 }
+
+.theme-dark #deadline>label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.theme-dark #announcement_deadline_time {
+  color: #fff;
+}
+
+.theme-dark #deadline #announcement_deadline_date,
+.theme-dark #deadline #announcement_deadline_time {
+  background-color: #000;
+}

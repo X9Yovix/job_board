@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Auth;
 
 use App\Entity\City;
 use App\Entity\User;
@@ -53,8 +53,35 @@ class RegistrationController extends AbstractController
         $errors = [];
         $roles = ['RECRUITER', 'CANDIDATE'];
 
+        $formData = [
+            'firstName' => null,
+            'lastName' => null,
+            'email' =>  null,
+            'birthday' =>  null,
+            'country' => null,
+            'state' =>  null,
+            'city' =>  null,
+            'role' =>null,
+            'phoneNumber' => null,
+            'phoneCode' =>  null,
+            'gender' =>  null,
+        ];
+
         if ($request->isMethod(Request::METHOD_POST)) {
             $data = $request->request->all();
+            $formData = [
+                'firstName' => $data['firstName'] ?? null,
+                'lastName' => $data['lastName'] ?? null,
+                'email' => $data['email'] ?? null,
+                'birthday' => $data['birthday'] ?? null,
+                'country' => $data['country'] ?? null,
+                'state' => $data['state'] ?? null,
+                'city' => $data['city'] ?? null,
+                'role' => $data['role'] ?? null,
+                'phoneNumber' => $data['phoneNumber'] ?? null,
+                'phoneCode' => $data['phoneCode'] ?? null,
+                'gender' => $data['gender'] ?? null,
+            ];
 
             $constraints = new Collection([
                 'firstName' => [new NotBlank(['message' => 'Please enter your first name',])],
@@ -94,7 +121,8 @@ class RegistrationController extends AbstractController
             }
 
             if (count($errors) > 0) {
-                return $this->render('registration/register.html.twig', [
+                return $this->render('auth/registration/register.html.twig', [
+                    'formData' => $formData,
                     'countries' => $countries,
                     'errors' => $errors,
                     'roles' => $roles
@@ -155,7 +183,8 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        return $this->render('registration/register.html.twig', [
+        return $this->render('auth/registration/register.html.twig', [
+            'formData' => $formData,
             'countries' => $countries,
             'errors' => $errors,
             'roles' => $roles

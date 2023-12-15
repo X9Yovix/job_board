@@ -1,17 +1,3 @@
-{# {{ form_start(form) }}
-{{ form_widget(form) }}
-<button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
-#}
-{# {{ form_start(form) }}
-{{ form_widget(form) }}
-{% if form.logo.vars.value is empty %}
-<a href="{{ asset('uploads/imgs/' ~ form.logo.vars.value) }}">View brochure (PDF)</a>
-{% endif %}
-<button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }} #}
-
-
 {{ form_start(form) }}
 {{ form_errors(form) }}
 <div class="row">

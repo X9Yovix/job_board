@@ -50,7 +50,8 @@
 				<div class="col-md-6">
 					<div class="form-group">
 						<label>First Name</label>
-						<input type="text" class="form-control" id="firstName" name="firstName">
+						<input type="text" class="form-control" id="firstName" name="firstName"
+							value="{{ formData['firstName'] }}">
 
 					</div>
 				</div>
@@ -58,14 +59,16 @@
 				<div class="col-md-6">
 					<div class="form-group">
 						<label>Last Name</label>
-						<input type="text" class="form-control" id="lastName" name="lastName">
+						<input type="text" class="form-control" id="lastName" name="lastName"
+							value="{{ formData['lastName'] }}">
 					</div>
 				</div>
 
 				<div class="col-md-6">
 					<div class="form-group">
 						<label>Email</label>
-						<input type="email" class="form-control" id="email" name="email">
+						<input type="email" class="form-control" id="email" name="email"
+							value="{{ formData['email'] }}">
 					</div>
 				</div>
 
@@ -80,14 +83,16 @@
 				<div class="col-md-6">
 					<div class="form-group">
 						<label>Birthday</label>
-						<input type="date" class="form-control" id="birthday" name="birthday">
+						<input type="date" class="form-control" id="birthday" name="birthday"
+							value="{{ formData['birthday'] }}">
 					</div>
 				</div>
 
 				<div class="col-md-6">
 					<div class="form-group">
 						<label>Country</label>
-						<select name="country" class="category nice-select form-control" id="countrySelect">
+						<select name="country" class="category nice-select form-control" id="countrySelect"
+							value="{{ formData['country'] }}">
 							<option selected></option>
 							{% for country in countries %}
 							<option value="{{ country.id }}">{{ country.name }}</option>
@@ -99,7 +104,8 @@
 				<div class="col-md-6" id="stateContainer">
 					<div class="form-group">
 						<label>State</label>
-						<select class="category nice-select form-control" name="state" id="stateSelect">
+						<select class="category nice-select form-control" name="state" id="stateSelect"
+							value="{{ formData['state'] }}">
 							<option data-display=" "></option>
 						</select>
 					</div>
@@ -108,7 +114,8 @@
 				<div class="col-md-6" id="cityContainer">
 					<div class="form-group">
 						<label>City</label>
-						<select class="category nice-select form-control" name="city" id="citySelect">
+						<select class="category nice-select form-control" name="city" id="citySelect"
+							value="{{ formData['city'] }}">
 							<option data-display=" "></option>
 						</select>
 					</div>
@@ -117,7 +124,8 @@
 				<div class="col-md-6">
 					<div class="form-group">
 						<label>Role</label>
-						<select name="role" class="category nice-select form-control" id="roleSelect">
+						<select name="role" class="category nice-select form-control" id="roleSelect"
+							value="{{ formData['role'] }}">
 							<option selected></option>
 							{% for role in roles %}
 							<option value="{{ role }}">{{ role }}</option>
@@ -133,8 +141,10 @@
 							<div class="input-group-prepend">
 								<span class="input-group-text" id="countryEmoji" style="height: 50px;">🛸</span>
 							</div>
-							<input type="text" class="form-control" id="phoneNumber" name="phoneNumber">
-							<input type="hidden" id="phoneCodeInput" name="phoneCode">
+							<input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
+								value="{{ formData['phoneNumber'] }}">
+							<input type="hidden" id="phoneCodeInput" name="phoneCode"
+								value="{{ formData['phoneCode'] }}">
 						</div>
 					</div>
 				</div>

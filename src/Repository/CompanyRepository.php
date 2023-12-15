@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\Company;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Company>
@@ -20,7 +21,15 @@ class CompanyRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Company::class);
     }
-
+    
+    public function findCompaniesByUser(User $user)
+    {
+        return $this->createQueryBuilder('c')
+            ->where(':user MEMBER OF c.users')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
 //    /**
 //     * @return Company[] Returns an array of Company objects
 //     */

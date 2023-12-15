@@ -21,14 +21,13 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    App\Service\MailerService:
+    App\Service\MailerService: ~
+
     App\Service\FileUploader:
         arguments:
             $targetDirectory: '%uploaded_imgs%'
 
-    #App\Form\KeywordFormEventSubscriber:
-    #    tags:
-    #        - { name: 'kernel.event_subscriber' }    
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\Form\KeywordFormEventSubscriber:
+        tags:
+            - { name: 'kernel.event_subscriber' }    
         

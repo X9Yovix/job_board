@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Recruiter;
 
 use DateTimeImmutable;
-use App\Entity\Announcement;
 use App\Form\AnnouncementType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AnnouncementRepository;
-use Symfony\Component\HttpFoundation\Request;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Announcement;
 
 #[IsGranted("ROLE_RECRUITER")]
 #[Route('/announcement')]
@@ -22,7 +22,7 @@ class AnnouncementController extends AbstractController
     #[Route('/', name: 'app_announcement_index', methods: ['GET'])]
     public function index(AnnouncementRepository $announcementRepository): Response
     {
-        return $this->render('announcement/index.html.twig', [
+        return $this->render('recruiter/announcement/index.html.twig', [
             'announcements' => $announcementRepository->findAll(),
         ]);
     }
@@ -39,27 +39,20 @@ class AnnouncementController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->getUser();
             $announcement->setRecruiter($user);
+            $announcement->generateSlug();
+            $announcement->setStatus('active');
+            $announcement->setCreatedAt(new DateTimeImmutable());
             foreach ($form->getData()->getKeywords() as $keyword) {
                 $announcement->addKeyword($keyword);
                 $keyword->addAnnouncement($announcement);
             }
-            $announcement->setStatus('active');
-            $announcement->setCreatedAt(new DateTimeImmutable());
             $entityManager->persist($announcement);
             $entityManager->flush();
             return $this->redirectToRoute('app_announcement_index', [], Response::HTTP_SEE_OTHER);
         }
-        return $this->render('announcement/new.html.twig', [
+        return $this->render('recruiter/announcement/new.html.twig', [
             'announcement' => $announcement,
             'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_announcement_show', methods: ['GET'])]
-    public function show(Announcement $announcement): Response
-    {
-        return $this->render('announcement/show.html.twig', [
-            'announcement' => $announcement,
         ]);
     }
 
@@ -94,7 +87,7 @@ class AnnouncementController extends AbstractController
             return $this->redirectToRoute('app_announcement_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('announcement/edit.html.twig', [
+        return $this->render('recruiter/announcement/edit.html.twig', [
             'announcement' => $announcement,
             'form' => $form,
         ]);

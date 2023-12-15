@@ -75,8 +75,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'recruiter', targetEntity: Announcement::class)]
     private Collection $announcements;
 
-    #[ORM\ManyToOne(inversedBy: 'recruiter')]
-    private ?Company $company = null;
+    #[ORM\ManyToMany(targetEntity: Company::class, inversedBy: 'users')]
+    private Collection $companies;
+
 
     public function __construct()
     {
@@ -84,6 +85,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->tokenLifetime = $_ENV['REGISTRATION_TOKEN_LIFETIME'];
         $this->registrationTokenLifeTime = (new DateTime('now'))->add(new DateInterval($this->tokenLifetime));
         $this->announcements = new ArrayCollection();
+        $this->companies = new ArrayCollection();
     }
 
     /* public function __toString(): string
@@ -346,15 +348,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCompany(): ?Company
+    /**
+     * @return Collection<int, Company>
+     */
+    public function getCompanies(): Collection
     {
-        return $this->company;
+        return $this->companies;
     }
 
-    public function setCompany(?Company $company): static
+    public function addCompany(Company $company): static
     {
-        $this->company = $company;
+        if (!$this->companies->contains($company)) {
+            $this->companies->add($company);
+        }
 
         return $this;
     }
+
+    public function removeCompany(Company $company): static
+    {
+        $this->companies->removeElement($company);
+
+        return $this;
+    }
+
 }

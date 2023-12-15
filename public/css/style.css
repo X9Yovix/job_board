@@ -4956,3 +4956,23 @@ h3 {
 .select2-container--default .select2-selection--multiple {
   padding-bottom: 12px !important;
 }
+
+#deadline>label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #001935;
+}
+
+#deadline .select2-container .select2-selection--single .select2-selection__rendered {
+  margin-right: 10px !important;
+}
+
+#deadline #announcement_deadline_date,
+#deadline #announcement_deadline_time {
+  text-align: center;
+  padding: 10px 20px;
+}
+
+#deadline .select2.select2-container.select2-container--default {
+  margin: 0 10px;
+}

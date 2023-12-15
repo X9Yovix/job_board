@@ -18,9 +18,17 @@ class CompanyType extends AbstractType
             ->add('logo', FileType::class, [
                 'label' => 'Company Logo (image file)',
                 'required' => false,
-                'data_class' => null, // Allow string for manual handling
+                'data_class' => null,
                 'constraints' => [
-                    // Add your file constraints here if needed
+                    new File([
+                        'maxSize' => '5M',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/jpg',
+                        ], 
+                        'mimeTypesMessage' => 'Please upload a valid image file (JPEG, PNG, JPG).',
+                    ]),
                 ],
             ])
             ->add('address')

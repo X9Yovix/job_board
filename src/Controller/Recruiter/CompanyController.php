@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Recruiter;
 
 use App\Entity\Company;
 use App\Form\CompanyType;
 use App\Service\FileUploader;
-use App\Repository\CompanyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,16 +12,19 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 #[IsGranted("ROLE_RECRUITER")]
 #[Route('/company')]
 class CompanyController extends AbstractController
 {
     #[Route('/', name: 'app_company_index', methods: ['GET'])]
-    public function index(CompanyRepository $companyRepository): Response
+    public function index(EntityManagerInterface $entityManager): Response
     {
-        return $this->render('company/index.html.twig', [
-            'companies' => $companyRepository->findAll(),
+        $user = $this->getUser();
+        $companies = $entityManager->getRepository(Company::class)->findCompaniesByUser($user);
+        return $this->render('recruiter/company/index.html.twig', [
+            'companies' => $companies,
         ]);
     }
 
@@ -43,14 +45,14 @@ class CompanyController extends AbstractController
             }
 
             $user = $this->getUser();
-            $company->addRecruiter($user);
+            $company->addUser($user);
             $entityManager->persist($company);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_company_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('company/new.html.twig', [
+        return $this->render('recruiter/company/new.html.twig', [
             'company' => $company,
             'form' => $form,
         ]);
@@ -59,7 +61,16 @@ class CompanyController extends AbstractController
     #[Route('/{id}', name: 'app_company_show', methods: ['GET'])]
     public function show(Company $company): Response
     {
-        return $this->render('company/show.html.twig', [
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
+
+        if (!$user->getCompanies()->contains($company)) {
+            throw new AccessDeniedException();
+        }
+
+        return $this->render('recruiter/company/show.html.twig', [
             'company' => $company,
         ]);
     }
@@ -67,6 +78,15 @@ class CompanyController extends AbstractController
     #[Route('/{id}/edit', name: 'app_company_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Company $company, EntityManagerInterface $entityManager, FileUploader $fileUploader): Response
     {
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
+
+        if (!$user->getCompanies()->contains($company)) {
+            throw new AccessDeniedException();
+        }
+
         $form = $this->createForm(CompanyType::class, $company);
         $form->handleRequest($request);
 
@@ -82,7 +102,7 @@ class CompanyController extends AbstractController
             return $this->redirectToRoute('app_company_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('company/edit.html.twig', [
+        return $this->render('recruiter/company/edit.html.twig', [
             'company' => $company,
             'form' => $form,
         ]);
@@ -91,7 +111,18 @@ class CompanyController extends AbstractController
     #[Route('/{id}', name: 'app_company_delete', methods: ['POST'])]
     public function delete(Request $request, Company $company, EntityManagerInterface $entityManager): Response
     {
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
+
+        if (!$user->getCompanies()->contains($company)) {
+            throw new AccessDeniedException();
+        }
+
         if ($this->isCsrfTokenValid('delete' . $company->getId(), $request->request->get('_token'))) {
+            $user = $this->getUser();
+            $company->addUser($user);
             $entityManager->remove($company);
             $entityManager->flush();
         }

@@ -24,18 +24,22 @@ class Company
     #[ORM\Column(length: 255)]
     private ?string $address = null;
 
-    #[ORM\OneToMany(mappedBy: 'company', targetEntity: User::class)]
-    private Collection $recruiter;
-
     #[ORM\Column]
     private ?float $latitude = null;
 
     #[ORM\Column]
     private ?float $longitude = null;
 
+    #[ORM\OneToMany(mappedBy: 'company', targetEntity: Announcement::class)]
+    private Collection $announcements;
+
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'companies')]
+    private Collection $users;
+
     public function __construct()
     {
-        $this->recruiter = new ArrayCollection();
+        $this->announcements = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -79,36 +83,6 @@ class Company
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getRecruiter(): Collection
-    {
-        return $this->recruiter;
-    }
-
-    public function addRecruiter(User $recruiter): static
-    {
-        if (!$this->recruiter->contains($recruiter)) {
-            $this->recruiter->add($recruiter);
-            $recruiter->setCompany($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRecruiter(User $recruiter): static
-    {
-        if ($this->recruiter->removeElement($recruiter)) {
-            // set the owning side to null (unless already changed)
-            if ($recruiter->getCompany() === $this) {
-                $recruiter->setCompany(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getLatitude(): ?float
     {
         return $this->latitude;
@@ -129,6 +103,63 @@ class Company
     public function setLongitude(float $longitude): static
     {
         $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Announcement>
+     */
+    public function getAnnouncements(): Collection
+    {
+        return $this->announcements;
+    }
+
+    public function addAnnouncement(Announcement $announcement): static
+    {
+        if (!$this->announcements->contains($announcement)) {
+            $this->announcements->add($announcement);
+            $announcement->setCompany($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnnouncement(Announcement $announcement): static
+    {
+        if ($this->announcements->removeElement($announcement)) {
+            // set the owning side to null (unless already changed)
+            if ($announcement->getCompany() === $this) {
+                $announcement->setCompany(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addCompany($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeCompany($this);
+        }
 
         return $this;
     }
