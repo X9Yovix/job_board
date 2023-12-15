@@ -23,6 +23,8 @@ class AnonymousController extends AbstractController
     public function announcements(AnnouncementRepository $announcementRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $query = $announcementRepository->createQueryBuilder('a')
+            ->where('a.status = :status')
+            ->setParameter('status', 'active')
             ->getQuery();
 
         $announcements = $paginator->paginate(
