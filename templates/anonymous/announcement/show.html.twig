@@ -17,9 +17,8 @@ Announcement
                                 <div class="row align-items-center">
                                     <div class="col-md-2">
                                         <div class="company-logo">
-                                            <img <img
-                                                src="{{ asset('uploads/imgs/' ~ announcement.company.logo) }}"
-                                                alt="logo" width="100px" height="100px" />
+                                            <img <img src="{{ asset('uploads/imgs/' ~ announcement.company.logo) }}"
+                                                alt="logo" width="70px" height="70px" />
                                         </div>
                                     </div>
                                     <div class="col-md-10">
@@ -52,12 +51,12 @@ Announcement
                                         <table class="table">
                                             <tbody>
                                                 <tr>
-                                                    <td><span><i class='bx bx-filter-alt'></i> Company</span></td>
-                                                    <td>{{ announcement.company.name }}</td>
+                                                    <td><span><i class='bx bx-filter-alt'></i> Company:</span></td>
+                                                    <td> {{ announcement.company.name }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td><span><i class="bx bx-location-plus"></i> Location</span></td>
-                                                    <td>{{ announcement.company.address }}</td>
+                                                    <td><span><i class="bx bx-location-plus"></i> Location:</span></td>
+                                                    <td> {{ announcement.company.address }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -66,12 +65,12 @@ Announcement
                                         <table class="table">
                                             <tbody>
                                                 <tr>
-                                                    <td><span><i class='bx bx-briefcase'></i> Job Type</span></td>
-                                                    <td>{{ announcement.jobType }}</td>
+                                                    <td><span><i class='bx bx-briefcase'></i> Job Type:</span></td>
+                                                    <td> {{ announcement.jobType }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td><span>Salary</span></td>
-                                                    <td>{{ announcement.salary }}</td>
+                                                    <td><span><i class='bx bx-money-withdraw'></i> Salary:</span></td>
+                                                    <td> {{ announcement.salary }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -108,8 +107,8 @@ Announcement
                     "&format=json&limit=1" %}
 
                     <div id="map" data-lat="{{ announcement.company.latitude }}"
-                        data-lon="{{ announcement.company.longitude }}"
-                        data-address="{{ announcement.company.name }}" style="height: 300px;">
+                        data-lon="{{ announcement.company.longitude }}" data-address="{{ announcement.company.name }}"
+                        style="height: 300px;">
                     </div>
                     {% else %}
                     <p>No address available</p>

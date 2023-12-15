@@ -30,7 +30,7 @@ class AnonymousController extends AbstractController
         $announcements = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
-            5 // items per page
+            6 // items per page
         );
 
         return $this->render('anonymous/announcement/index.html.twig', [
