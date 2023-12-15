@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Announcement;
 
 #[IsGranted("ROLE_RECRUITER")]
-#[Route('/announcement')]
+#[Route('/recruiter/announcement')]
 class AnnouncementController extends AbstractController
 {
     #[Route('/', name: 'app_announcement_index', methods: ['GET'])]

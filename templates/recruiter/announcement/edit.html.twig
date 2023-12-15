@@ -1,15 +1,15 @@
-{% extends 'base.html.twig' %}
+{% extends 'recruiter/dashboard/index.html.twig' %}
 
 {% block title %}
   Edit Announcement
 {% endblock %}
 
-{% block body %}
+{% block content %}
   <h1>Edit Announcement</h1>
 
   {{ include('recruiter/announcement/_form.html.twig', { button_label: 'Update' }) }}
 
   <a href="{{ path('app_announcement_index') }}">back to list</a>
 
-  {{ include('announcement/_delete_form.html.twig') }}
+  {{ include('recruiter/announcement/_delete_form.html.twig') }}
 {% endblock %}

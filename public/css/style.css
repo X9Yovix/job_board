@@ -4976,3 +4976,8 @@ h3 {
 #deadline .select2.select2-container.select2-container--default {
   margin: 0 10px;
 }
+
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link  {
+  background-color: #365e7d !important;
+}

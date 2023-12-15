@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 #[IsGranted("ROLE_RECRUITER")]
-#[Route('/company')]
+#[Route('/recruiter/company')]
 class CompanyController extends AbstractController
 {
     #[Route('/', name: 'app_company_index', methods: ['GET'])]
