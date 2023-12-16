@@ -78,6 +78,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Company::class, inversedBy: 'users')]
     private Collection $companies;
 
+    #[ORM\Column(length: 255)]
+    private ?string $imgUrl = null;
+
 
     public function __construct()
     {
@@ -368,6 +371,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeCompany(Company $company): static
     {
         $this->companies->removeElement($company);
+
+        return $this;
+    }
+
+    public function getImgUrl(): ?string
+    {
+        return $this->imgUrl;
+    }
+
+    public function setImgUrl(string $imgUrl): static
+    {
+        $this->imgUrl = $imgUrl;
 
         return $this;
     }

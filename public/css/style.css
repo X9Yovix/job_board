@@ -2973,7 +2973,9 @@ h3 {
 }
 
 .job-details-text .details-text .table tr td span {
-  color: #001935;
+  /* color: #001935; */
+  /* updated */
+  color: #7b97b7;
   font-weight: 500;
 }
 
@@ -4985,5 +4987,20 @@ h3 {
 
 .job-card .job-save a i {
   margin-bottom: 0px !important;
+}
 
+/* .default-btn.custom-btn {
+  background: #fff;
+  color: #525252;
+  padding: 5px 10px !important;
+  border-radius: 5px;
+  font-size: unset !important;
+}
+
+.default-btn.custom-btn:hover {
+  color: #fff;
+} */
+.dropdown-menu.custom-navbar {
+  border-radius: 2px !important;
+  background-color: #212529c9 !important;
 }
