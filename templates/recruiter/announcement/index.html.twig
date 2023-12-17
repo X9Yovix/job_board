@@ -1,49 +1,62 @@
 {% extends 'recruiter/dashboard/index.html.twig' %}
 
-{% block title %}
-Announcement index
+{% block title %}Announcement index
 {% endblock %}
 
 {% block content %}
-<h1>Announcement index</h1>
-
+<div class="row mb-3">
+    <div class="col-md-10">
+        <h1>Announcement index</h1>
+    </div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-success">
+            <a href="{{ path('app_announcement_new') }}">
+                <i class='bx bxs-add-to-queue'></i> Create new
+            </a>
+        </button>
+    </div>
+</div>
 <table class="table">
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Deadline</th>
-      <th>Title</th>
-      <th>Description</th>
-      <th>Requirements</th>
-      <th>Experince</th>
-      <th>Salary</th>
-      <th>CompanyName</th>
-      <th>actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for announcement in announcements %}
-    <tr>
-      <td>{{ announcement.id }}</td>
-      <td>{{ announcement.deadline| date('F d, Y H:i') }}</td>
-      <td>{{ announcement.title }}</td>
-      <td>{{ announcement.description }}</td>
-      <td>{{ announcement.requirements }}</td>
-      <td>{{ announcement.experince }}</td>
-      <td>{{ announcement.salary }}</td>
-      {# <td>{{ announcement.companyName }}</td> #}
-      <td>
-        <a href="{{ path('app_announcement_show', { slug: announcement.slug }) }}">show</a>
-        <a href="{{ path('app_announcement_edit', { id: announcement.id }) }}">edit</a>
-      </td>
-    </tr>
-    {% else %}
-    <tr>
-      <td colspan="8">no records found</td>
-    </tr>
-    {% endfor %}
-  </tbody>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Deadline</th>
+            <th>Title</th>
+            <th>Experince</th>
+            <th>Salary</th>
+            <th>Company Name</th>
+            <th colspan="2" class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for announcement in announcements %}
+        <tr>
+            <td>{{ announcement.id }}</td>
+            <td>{{ announcement.deadline|date('F d, Y H:i') }}</td>
+            <td>{{ announcement.title }}</td>
+            <td>{{ announcement.experince }}</td>
+            <td>{{ announcement.salary }}</td>
+            <td>{{ announcement.company.name }}</td>
+            <td>
+                <a href="{{ path('app_announcement_show', { slug: announcement.slug }) }}"
+                    class="d-flex align-items-center">
+                    <i class='bx bx-show-alt'></i>
+                    <span> show</span>
+                </a>
+            </td>
+            <td>
+                <a href="{{ path('app_announcement_edit', { id: announcement.id }) }}"
+                    class="d-flex align-items-center">
+                    <i class='bx bxs-edit-alt'></i>
+                    <span> edit</span>
+                </a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="5">no records found</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
-
-<a href="{{ path('app_announcement_new') }}">Create new</a>
 {% endblock %}

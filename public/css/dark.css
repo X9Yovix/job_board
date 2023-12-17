@@ -739,3 +739,11 @@ Default CSS
 .theme-dark #deadline #announcement_deadline_time {
   background-color: #000;
 }
+
+.theme-dark .table tbody tr {
+  color: #dee2e6 !important;
+}
+
+.theme-dark .table thead th {
+  color: #755431 !important
+}

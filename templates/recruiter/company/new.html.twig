@@ -3,9 +3,18 @@
 {% block title %}New Company{% endblock %}
 
 {% block content %}
-    <h1>Create new Company</h1>
-
-    {{ include('recruiter/company/_form.html.twig') }}
-
-    <a href="{{ path('app_company_index') }}">back to list</a>
+<div class="row mb-3">
+    <div class="col-md-4">
+        <button type="button" class="btn btn-dark">
+            <a href="{{ path('app_company_index') }}" class="d-flex align-items-center back-to-list">
+                <i class='bx bx-left-arrow-circle'></i>
+                <span>Back to list</span>
+            </a>
+        </button>
+    </div>
+    <div class="col-md-8">
+        <h1>Create new Company</h1>
+    </div>
+</div>
+{{ include('recruiter/company/_form.html.twig') }}
 {% endblock %}

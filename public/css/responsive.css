@@ -10,6 +10,10 @@
     padding-top: 50px;
     padding-bottom: 50px;
   }
+  .ptb-50 {
+    padding-top: 25px;
+    padding-bottom: 25px;
+  }
   .pb-100 {
     padding-bottom: 50px;
   }
@@ -741,6 +745,10 @@
   .ptb-100 {
     padding-top: 70px;
     padding-bottom: 70px;
+  }
+  .ptb-50 {
+    padding-top: 35px;
+    padding-bottom: 35px;
   }
   .pb-100 {
     padding-bottom: 70px;

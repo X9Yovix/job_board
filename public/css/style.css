@@ -88,6 +88,12 @@ h3 {
   padding-bottom: 100px;
 }
 
+/* added */
+.ptb-50 {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
 .pb-100 {
   padding-bottom: 100px;
 }
@@ -4982,7 +4988,7 @@ h3 {
 
 .nav-pills .nav-link.active,
 .nav-pills .show>.nav-link {
-  background-color: #365e7d !important;
+  background-color: #001935 !important;
 }
 
 .job-card .job-save a i {
@@ -5003,4 +5009,20 @@ h3 {
 .dropdown-menu.custom-navbar {
   border-radius: 2px !important;
   background-color: #212529c9 !important;
+}
+
+a.back-to-list {
+  color: white !important;
+}
+
+a.back-to-list:hover {
+  color: #ff2d55 !important;
+}
+
+.dashboard-items a {
+  color: white !important;
+}
+
+.dashboard-items a:hover {
+  color: #365e7d !important
 }

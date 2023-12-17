@@ -6,8 +6,14 @@ Announcement
 
 {% block body %}
 <!-- Job Details Section Start -->
-<section class="job-details ptb-100">
+<section class="job-details ptb-50">
     <div class="container">
+        <button type="button" class="btn btn-dark mb-4">
+            <a href="{{ path('app_announcements') }}" class="d-flex align-items-center back-to-list">
+                <i class='bx bx-left-arrow-circle'></i>
+                <span>Back to list</span>
+            </a>
+        </button>
         <div class="row">
             <div class="col-lg-8">
                 <div class="row">
@@ -92,7 +98,7 @@ Announcement
                 <div class="job-sidebar">
                     <h3>Posted By</h3>
                     <div class="posted-by">
-                        <img src="assets/img/client-1.png" alt="client image">
+                        <img src="{{ asset('uploads/imgs/' ~ announcement.recruiter.imgUrl) }}" alt="Recruiter Image">
                         <h4>{{ announcement.recruiter.firstName }} {{ announcement.recruiter.lastName }}</h4>
                         <span>{{ announcement.recruiter.jobTitle }}</span>
                     </div>
@@ -156,7 +162,6 @@ Announcement
     </div>
 </section>
 <!-- Job Details Section End -->
-<a href="{{ path('app_announcements') }}">back to list</a>
 
 {% endblock %}
 {% block stylesheets %}
