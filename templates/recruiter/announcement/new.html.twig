@@ -1,0 +1,20 @@
+{% extends 'recruiter/dashboard/index.html.twig' %}
+
+{% block title %}New Announcement{% endblock %}
+
+{% block content %}
+<div class="row mb-3">
+    <div class="col-md-4">
+        <button type="button" class="btn btn-dark">
+            <a href="{{ path('app_announcement_index') }}" class="d-flex align-items-center back-to-list">
+                <i class='bx bx-left-arrow-circle'></i>
+                <span>Back to list</span>
+            </a>
+        </button>
+    </div>
+    <div class="col-md-8">
+        <h1>Create new Announcement</h1>
+    </div>
+</div>
+{{ include('recruiter/announcement/_form.html.twig') }}
+{% endblock %}

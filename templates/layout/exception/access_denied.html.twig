@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Access Denied
+{% endblock %}
+
+{% block body %}
+<!-- Error Section Start -->
+<div class="error-section ptb-100">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 offset-md-2">
+				<div class="error-img">
+					<img src="{{asset('img/404.png')}}" alt="error image">
+					<div class="theme-btn text-center">
+						<a href="{{path('app_index')}}" class="default-btn">Go To Home</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Error Section End -->
+{% endblock %}

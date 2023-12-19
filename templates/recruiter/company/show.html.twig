@@ -1,0 +1,59 @@
+{% extends 'recruiter/dashboard/index.html.twig' %}
+
+{% block title %}Company{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-2">
+        <button type="button" class="btn btn-dark">
+            <a href="{{ path('app_company_index') }}" class="d-flex align-items-center back-to-list">
+                <i class='bx bx-left-arrow-circle'></i>
+                <span>Back to list</span>
+            </a>
+        </button>
+    </div>
+    <div class="col-md-7 text-center">
+        <h1>Company</h1>
+    </div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-warning">
+            <a href="{{ path('app_company_edit', {'id': company.id}) }}" class="d-flex align-items-center">
+                <i class='bx bxs-edit-alt'></i>
+                <span> edit</span>
+            </a>
+        </button>
+    </div>
+    <div class="col-md-1">
+        {{ include('recruiter/company/_delete_form.html.twig') }}
+    </div>
+</div>
+<table class="table">
+    <tbody>
+        <tr>
+            <th>Logo</th>
+            <td>
+                <img src="{{ asset('uploads/imgs/' ~ company.logo) }}" alt="Logo" width="90px" height="90px">
+            </td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{ company.name }}</td>
+        </tr>
+
+        <tr>
+            <th>Address</th>
+            <td>{{ company.address }}</td>
+        </tr>
+        <tr>
+            <th>Latitude</th>
+            <td>{{ company.latitude }}</td>
+        </tr>
+        <tr>
+            <th>Longitude</th>
+            <td>{{ company.longitude }}</td>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock %}

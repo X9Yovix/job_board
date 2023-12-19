@@ -1,16 +1,77 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
 
-        {% block javascripts %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+<head>
+	<meta charset="UTF-8">
+	<title>{% block title %}TEKUP-JOB-BOARD{% endblock %}</title>
+	<link rel="stylesheet" href="{{asset('css/bootstrap.min.css') }}">
+	<link rel="stylesheet" href="{{asset('css/owl.carousel.min.css') }}">
+	<link rel="stylesheet" href="{{asset('css/owl.theme.default.min.css') }}">
+	<link rel="stylesheet" href="{{asset('css/boxicon.min.css') }}">
+	<link rel="stylesheet" href="{{asset('fonts/flaticon/flaticon.css') }}">
+	<link rel="stylesheet" href="{{asset('css/meanmenu.css') }}">
+	<link rel="stylesheet" href="{{asset('css/style.css') }}">
+	<link rel="stylesheet" href="{{asset('css/dark.css') }}">
+	<link rel="stylesheet" href="{{asset('css/select2.min.css') }}">
+	<link rel="stylesheet" href="{{asset('css/responsive.css') }}">
+	<link rel="icon" type="image/png" href="{{asset('img/favicon.ico') }}">
+	{% block stylesheets %}
+	{% endblock %}
+	<script src="{{asset('js/jquery.min.js')}}"></script>
+	{% block javascripts %}
+	{% endblock %}
+</head>
+
+<body>
+	<!-- Pre-loader Start -->
+	<div class="loader-content">
+		<div class="d-table">
+			<div class="d-table-cell">
+				<div class="sk-circle">
+					<div class="sk-circle1 sk-child"></div>
+					<div class="sk-circle2 sk-child"></div>
+					<div class="sk-circle3 sk-child"></div>
+					<div class="sk-circle4 sk-child"></div>
+					<div class="sk-circle5 sk-child"></div>
+					<div class="sk-circle6 sk-child"></div>
+					<div class="sk-circle7 sk-child"></div>
+					<div class="sk-circle8 sk-child"></div>
+					<div class="sk-circle9 sk-child"></div>
+					<div class="sk-circle10 sk-child"></div>
+					<div class="sk-circle11 sk-child"></div>
+					<div class="sk-circle12 sk-child"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Pre-loader End -->
+
+	{% block navbar %}
+	{% include 'layout/navbar.html.twig' %}
+	{% endblock %}
+
+	{% include '_partials/_flash.html.twig' %}
+
+	{% block body %}{% endblock %}
+
+	<!-- Back To Top Start -->
+	<div class="top-btn">
+		<i class='bx bx-chevrons-up bx-fade-up'></i>
+	</div>
+	<!-- Back To Top End -->
+
+	{% block footer %}
+	{% include 'layout/footer.html.twig' %}
+	{% endblock %}
+
+	<script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
+	<script src="{{asset('js/owl.carousel.min.js')}}"></script>
+	<script src="{{asset('js/jquery.magnific-popup.min.js')}}"></script>
+	<script src="{{asset('js/form-validator.min.js')}}"></script>
+	<script src="{{asset('js/meanmenu.js')}}"></script>
+	<script src="{{asset('js/select2.min.js')}}"></script>
+	<script src="{{asset('js/custom.js')}}"></script>
+
+</body>
+
 </html>

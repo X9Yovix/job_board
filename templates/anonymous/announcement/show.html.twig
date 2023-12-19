@@ -1,0 +1,190 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Announcement
+{% endblock %}
+
+{% block body %}
+<!-- Job Details Section Start -->
+<section class="job-details ptb-50">
+    <div class="container">
+        <button type="button" class="btn btn-dark mb-4">
+            <a href="{{ path('app_announcements') }}" class="d-flex align-items-center back-to-list">
+                <i class='bx bx-left-arrow-circle'></i>
+                <span>Back to list</span>
+            </a>
+        </button>
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="job-details-text">
+                            <div class="job-card">
+                                <div class="row align-items-center">
+                                    <div class="col-md-2">
+                                        <div class="company-logo">
+                                            <img <img src="{{ asset('uploads/imgs/' ~ announcement.company.logo) }}"
+                                                alt="logo" width="70px" height="70px" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="job-info">
+                                            <h3>{{ announcement.title }}</h3>
+
+                                            <span>
+                                                <i class="bx bx-paper-plane"></i>
+                                                Apply Before: {{ announcement.deadline|date('F d, Y H:i') }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="details-text">
+                                <h3>Description</h3>
+                                <p>{{ announcement.description }}</p>
+                            </div>
+
+                            <div class="details-text">
+                                <h3>Requirements</h3>
+                                <p>{{ announcement.requirements }}</p>
+                            </div>
+
+                            <div class="details-text">
+                                <h3>Job Details</h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td><span><i class='bx bx-filter-alt'></i> Company:</span></td>
+                                                    <td> {{ announcement.company.name }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><span><i class="bx bx-location-plus"></i> Location:</span></td>
+                                                    <td> {{ announcement.company.address }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td><span><i class='bx bx-briefcase'></i> Job Type:</span></td>
+                                                    <td> {{ announcement.jobType }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><span><i class='bx bx-money-withdraw'></i> Salary:</span></td>
+                                                    <td> {{ announcement.salary }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="theme-btn">
+                                <a href="#" class="default-btn">
+                                    Apply Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="job-sidebar">
+                    <h3>Posted By</h3>
+                    <div class="posted-by">
+                        <img src="{{ asset('uploads/imgs/' ~ announcement.recruiter.imgUrl) }}" alt="Recruiter Image">
+                        <h4>{{ announcement.recruiter.firstName }} {{ announcement.recruiter.lastName }}</h4>
+                        <span>{{ announcement.recruiter.jobTitle }}</span>
+                    </div>
+                </div>
+
+                <div class="job-sidebar">
+                    <h3>Location</h3>
+                    {% if announcement.company.address %}
+
+                    {% set addressForUrl = announcement.company.address|replace({' ': '+'}) %}
+                    {% set osmGeocodingUrl = "https://nominatim.openstreetmap.org/search?q=" ~ addressForUrl ~
+                    "&format=json&limit=1" %}
+
+                    <div id="map" data-lat="{{ announcement.company.latitude }}"
+                        data-lon="{{ announcement.company.longitude }}" data-address="{{ announcement.company.name }}"
+                        style="height: 300px;">
+                    </div>
+                    {% else %}
+                    <p>No address available</p>
+                    {% endif %}
+                </div>
+
+                <div class="job-sidebar">
+                    <h3>Keywords</h3>
+                    <ul>
+                        {% for key in announcement.keywords %}
+                        <li>
+                            <a href="#">{{key}}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="job-sidebar social-share">
+                    <h3>Share In</h3>
+                    <ul>
+                        <li>
+                            <a href="#" target="_blank">
+                                <i class="bx bxl-facebook"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">
+                                <i class="bx bxl-twitter"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">
+                                <i class="bx bxl-pinterest"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" target="_blank">
+                                <i class="bx bxl-linkedin"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Job Details Section End -->
+
+{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+{% endblock %}
+{% block javascripts %}
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var mapElement = document.getElementById('map');
+        var lat = mapElement.getAttribute('data-lat');
+        var lon = mapElement.getAttribute('data-lon');
+        var address = mapElement.getAttribute('data-address');
+
+        var map = L.map('map').setView([lat, lon], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© TEKUP Job Board'
+        }).addTo(map);
+
+        L.marker([lat, lon]).addTo(map)
+            .bindPopup(address).openPopup();
+    });
+</script>
+{% endblock %}

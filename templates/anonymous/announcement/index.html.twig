@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Job List{% endblock %}
+
+{% block body %}
+<!-- Jobs Section Start -->
+<section class="job-section jobs-grid-section pt-100 pb-70">
+    <div class="container">
+        <div class="section-title text-center">
+            <h2>Jobs You May Be Interested In</h2>
+        </div>
+
+        <div class="row">
+            {% for announcement in announcements %}
+            <div class="col-md-6">
+                <div class="job-card">
+                    <div class="row align-items-center">
+                        <div class="col-lg-3">
+                            <div class="thumb-img">
+                                <img src="{{ asset('uploads/imgs/' ~ announcement.company.logo) }}" alt="logo">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="job-info">
+                                <h3>
+                                    <a href="{{ path('app_announcement_show', {'slug': announcement.slug}) }}">
+                                        {{announcement.title}}
+                                    </a>
+                                </h3>
+                                <ul>
+                                    <li>
+                                        <i class='bx bx-briefcase'></i>
+                                        {{ announcement.jobType }}
+                                    </li>
+                                    <li>
+                                        <i class='bx bx-location-plus'></i>
+                                        {{ announcement.company.address }}
+                                    </li>
+                                    <li>
+                                        <i class='bx bx-money-withdraw'></i>
+                                        {% if announcement.salary %}
+                                        {{ announcement.salary|number_format(2, '.', ' ') }} DT
+                                        {% else %}
+                                        Negotiable
+                                        {% endif %}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="job-save custom-browse-btn">
+                                <a href="{{ path('app_announcement_show', {'slug': announcement.slug}) }}">
+                                    <span>
+                                        <i class='bx bx-windows bx-xs' title="Browse Job"></i>
+                                    </span>
+                                </a>
+
+                                <p>
+                                    <i class='bx bx-stopwatch'></i>
+                                    Posted
+                                    {% set currentDate = date('now') %}
+                                    {% set createdAt = announcement.createdAt %}
+                                    {% set dateDiff = currentDate.diff(createdAt) %}
+
+                                    {% set daysDiff = dateDiff.days %}
+                                    {% set hoursDiff = dateDiff.h %}
+                                    {% set minutesDiff = dateDiff.i %}
+
+                                    {% if daysDiff > 0 %}
+                                    {{ daysDiff }} {{ daysDiff == 1 ? 'day' : 'days' }}
+                                    {% endif %}
+
+                                    {% if hoursDiff > 0 %}
+                                    {{ hoursDiff }} {{ hoursDiff == 1 ? 'hour' : 'hours' }}
+                                    {% endif %}
+
+                                    {% if minutesDiff > 0 %}
+                                    {{ minutesDiff }} {{ minutesDiff == 1 ? 'minute' : 'minutes' }}
+                                    {% endif %}
+                                    ago
+
+                                    {% if daysDiff == 0 and hoursDiff == 0 and minutesDiff == 0 %}
+                                    just now
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="d-flex justify-content-center mt-4">
+            {{ knp_pagination_render(announcements) }}
+        </div>
+    </div>
+</section>
+<!-- Jobs Section End -->
+{% endblock %}

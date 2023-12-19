@@ -1,0 +1,57 @@
+{% extends 'recruiter/dashboard/index.html.twig' %}
+
+{% block title %}Company index{% endblock %}
+
+{% block content %}
+<div class="row mb-3">
+    <div class="col-md-10">
+        <h1>Company index</h1>
+    </div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-success">
+            <a href="{{ path('app_company_new') }}">
+                <i class='bx bxs-add-to-queue'></i> Create new
+            </a>
+        </button>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th colspan="2" class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for company in companies %}
+        <tr>
+            <td>{{ company.id }}</td>
+            <td>{{ company.name }}</td>
+            <td>{{ company.address }}</td>
+            <td>{{ company.latitude }}</td>
+            <td>{{ company.longitude }}</td>
+            <td>
+                <a href="{{ path('app_company_show', {'id': company.id}) }}" class="d-flex align-items-center">
+                    <i class='bx bx-show-alt'></i>
+                    <span> show</span>
+                </a>
+            </td>
+            <td>
+                <a href="{{ path('app_company_edit', {'id': company.id}) }}" class="d-flex align-items-center">
+                    <i class='bx bxs-edit-alt'></i>
+                    <span> edit</span>
+                </a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="5">no records found</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

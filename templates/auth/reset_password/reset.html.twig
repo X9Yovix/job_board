@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reset your password{% endblock %}
+
+{% block body %}
+
+<!-- Page Title Start -->
+<section class="page-title title-bg14">
+    <div class="d-table">
+        <div class="d-table-cell">
+            <ul>
+                <li>
+                    <h2>Reset Password</h2>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="lines">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+</section>
+<!-- Page Title End -->
+
+<!-- Reset Password Section Start -->
+<div class="reset-password ptb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center mb-5">
+                <div>
+                    <small>
+                        Create your new password.
+                    </small>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-8 offset-md-2 offset-lg-3">
+                {{ form_start(resetForm, {'attr': {'class': 'reset-form'} } ) }}
+
+                <div class="form-group">
+                    {{ form_row(resetForm.plainPassword) }}
+                </div>
+                <div class="reset-btn text-center">
+                    <button type="submit">Reset Password</button>
+                </div>
+                {{ form_end(resetForm) }}
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Reset Password Section End -->
+{% endblock %}

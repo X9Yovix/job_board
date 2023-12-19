@@ -1,0 +1,45 @@
+{{ form_start(form, { attr: { class: 'job-post-from' } }) }}
+{{ form_errors(form) }}
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">{{ form_row(form.name, { label: 'Comany Name', attr: { class: 'form-control' } }) }}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            {% if form.logo.vars.data is not empty %}
+            <div class="col-md-10">
+                <div class="form-group">
+                    {{ form_row(form.logo, { label: 'Logo', attr: { class: 'form-control' } }) }}
+                </div>
+            </div>
+            <div class="col-md-2">
+                <img src="{{ asset('uploads/imgs/' ~ form.logo.vars.data) }}" alt="Logo" width="90px" height="90px">
+            </div>
+            {% else %}
+            <div class="col-md-12">
+                <div class="form-group">
+                    {{ form_row(form.logo, { label: 'Logo', attr: { class: 'form-control' } }) }}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">{{ form_row(form.address, { label: 'Comany Address', attr: { class: 'form-control' } })
+            }}
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">{{ form_row(form.longitude, { label: 'Longitude', attr: { class: 'form-control' } }) }}
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">{{ form_row(form.latitude, { label: 'Latitude', attr: { class: 'form-control' } }) }}
+        </div>
+    </div>
+    <div class="col-md-12 text-center">
+        <button class="btn post-btn">{{ button_label|default('Save') }}</button>
+    </div>
+</div>
+{{ form_end(form) }}

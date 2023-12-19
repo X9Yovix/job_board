@@ -1,0 +1,23 @@
+{% extends 'recruiter/dashboard/index.html.twig' %}
+
+{% block title %}Edit Company{% endblock %}
+
+{% block content %}
+<div class="row mb-3">
+    <div class="col-md-4">
+        <button type="button" class="btn btn-dark">
+            <a href="{{ path('app_company_index') }}" class="d-flex align-items-center back-to-list">
+                <i class='bx bx-left-arrow-circle'></i>
+                <span>Back to list</span>
+            </a>
+        </button>
+    </div>
+    <div class="col-md-7">
+        <h1>Edit Company</h1>
+    </div>
+    <div class="col-md-1">
+        {{ include('recruiter/company/_delete_form.html.twig') }}
+    </div>
+</div>
+{{ include('recruiter/company/_form.html.twig', {'button_label': 'Update'}) }}
+{% endblock %}

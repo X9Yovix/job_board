@@ -20,3 +20,5 @@
 ###< symfony/phpunit-bridge ###
 
 .env
+
+local_files
