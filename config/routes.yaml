@@ -3,3 +3,6 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+updateProfile:
+    path: '/updateProfile/{id}'
+    controller: 'App\Controller\Candidat\UserController::UpdateUser'

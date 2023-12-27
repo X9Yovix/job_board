@@ -52,14 +52,18 @@
                                         <li>
                                             <hr class="dropdown-divider text-light">
                                         </li>
+
                                         <li>
-                                            <a class="dropdown-item" href="#">
-                                                <div class="d-flex align-items-center">
+                                            <a class="dropdown-item" href="{{ path('updateProfile', {'id': app.user.id}) }}">
+
+
+                                            <div class="d-flex align-items-center">
                                                     <i class='bx bxs-user-account bx-sm'></i>
                                                     <span class="mx-2">Profile</span>
                                                 </div>
                                             </a>
                                         </li>
+
                                         <li>
                                             <a class="dropdown-item" href="{{ path('app_recruiter_dashboard') }}">
                                                 {% if is_granted('ROLE_RECRUITER') %}

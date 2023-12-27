@@ -23,7 +23,7 @@ class CompanyController extends AbstractController
     {
         $user = $this->getUser();
         $companies = $entityManager->getRepository(Company::class)->findCompaniesByUser($user);
-        return $this->render('recruiter/company/index.html.twig', [
+        return $this->render('recruiter/company/updateProfil.html.twig.html.twig', [
             'companies' => $companies,
         ]);
     }
