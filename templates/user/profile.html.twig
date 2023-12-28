@@ -1,0 +1,54 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>User Profile</h1>
+
+        {% if app.session.flashbag.has('success') %}
+            <div class="alert alert-success" role="alert">
+                {{ app.session.flashbag.get('success') | first }}
+            </div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_start(form) }}
+
+                <div class="mb-3">
+                    {{ form_row(form.firstName, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_row(form.lastName, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+
+                <div class="mb-3">
+                    {{ form_row(form.birthday, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_row(form.phoneNumber, {'attr': {'class': 'form-select'}}) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_row(form.gender, {'attr': {'class': 'form-select'}}) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_row(form.imgUrl, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="col-md-12 ">
+                    <button type="submit" style="  background: #fd1616;color: #ffffff;-webkit-transition: 0.5s;transition: 0.5s;margin-top: 30px;border-radius: 10px;padding: 10px 45px;font-weight: 500;">
+                        Update
+                    </button>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+
+        </div>
+    </div>
+    <div class="mb-5"> </div>
+{% endblock %}

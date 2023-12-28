@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\User;
 
 use App\Entity\Country;
 use App\Form\UserType;
+use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +21,9 @@ class UserController extends AbstractController
     }
 
     #[Route('/profile', name: 'app_user_profile')]
-    public function index(Request $request,EntityManagerInterface $entityManager): Response
+    public function index(Request $request,
+                          EntityManagerInterface $entityManager,
+                          FileUploader $fileUploader): Response
     {
         $user = $this->getUser();
 
@@ -39,6 +42,8 @@ class UserController extends AbstractController
             'birthday' => $user->getBirthday(),
             'phoneNumber' => $user->getPhoneNumber(),
             'gender' => $user->getGender(),
+            'imgUrl' => null,
+
         ];
 
         $form = $this->createForm(UserType::class, $formData);
@@ -54,7 +59,10 @@ class UserController extends AbstractController
             $user->setBirthday(($formData['birthday']));
             $user->setGender($formData['gender']);
             $user->setPhoneNumber($formData['phoneNumber']);
-
+            if ($formData['imgUrl']) {
+                $fileName = $fileUploader->upload($formData['imgUrl']);
+                $user->setImgUrl($fileName);
+            }
             $entityManager->persist($user);
             $entityManager->flush();
 
