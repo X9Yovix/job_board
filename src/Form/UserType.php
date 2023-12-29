@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -21,7 +22,10 @@ class UserType extends AbstractType
             ->add('lastName', TextType::class, [
                 'label' => 'Last Name',
             ])
-
+            ->add('jobTitle', TextType::class, [
+                'label' => 'Job Title',
+                'required' => false,
+            ])
             ->add('birthday', BirthdayType::class, [
                 'label' => 'Birthday',
                 'widget' => 'single_text',
@@ -35,6 +39,7 @@ class UserType extends AbstractType
             ])
             ->add('imgUrl', FileType::class, [
                 'label' => 'Image',
+                'required' => false,
             ]);
     }
 

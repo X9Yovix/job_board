@@ -21,10 +21,14 @@ class UserController extends AbstractController
     }
 
     #[Route('/profile', name: 'app_user_profile')]
-    public function index(Request $request,
-                          EntityManagerInterface $entityManager,
-                          FileUploader $fileUploader): Response
-    {
+    public function index(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        FileUploader $fileUploader
+    ): Response {
+        /**
+         * @var \App\Entity\User $user
+         */
         $user = $this->getUser();
 
         $query = $this->entityManager
@@ -53,12 +57,12 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
 
-            // Update user data in the database
             $user->setFirstName($formData['firstName']);
             $user->setLastName($formData['lastName']);
             $user->setBirthday(($formData['birthday']));
             $user->setGender($formData['gender']);
             $user->setPhoneNumber($formData['phoneNumber']);
+            $user->setJobTitle($formData['jobTitle'] ? $formData['jobTitle'] : "");
             if ($formData['imgUrl']) {
                 $fileName = $fileUploader->upload($formData['imgUrl']);
                 $user->setImgUrl($fileName);
