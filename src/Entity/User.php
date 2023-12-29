@@ -81,6 +81,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
    #[ORM\Column(length: 255)]
     private ?string $imgUrl = "nada";
 
+   #[ORM\ManyToMany(targetEntity: Announcement::class, mappedBy: 'appliedUsers')]
+   private Collection $appliedJobs;
+
 
     public function __construct()
     {
@@ -89,6 +92,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->registrationTokenLifeTime = (new DateTime('now'))->add(new DateInterval($this->tokenLifetime));
         $this->announcements = new ArrayCollection();
         $this->companies = new ArrayCollection();
+        $this->appliedJobs = new ArrayCollection();
     }
 
     /* public function __toString(): string
@@ -383,6 +387,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setImgUrl(string $imgUrl): static
     {
         $this->imgUrl = $imgUrl;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Announcement>
+     */
+    public function getAppliedJobs(): Collection
+    {
+        return $this->appliedJobs;
+    }
+
+    public function addAppliedJob(Announcement $appliedJob): static
+    {
+        if (!$this->appliedJobs->contains($appliedJob)) {
+            $this->appliedJobs->add($appliedJob);
+            $appliedJob->addAppliedUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAppliedJob(Announcement $appliedJob): static
+    {
+        if ($this->appliedJobs->removeElement($appliedJob)) {
+            $appliedJob->removeAppliedUser($this);
+        }
 
         return $this;
     }

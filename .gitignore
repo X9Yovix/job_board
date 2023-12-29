@@ -15,10 +15,10 @@
 ###< phpunit/phpunit ###
 
 ###> symfony/phpunit-bridge ###
-.phpunit.result.cache
-/phpunit.xml
 ###< symfony/phpunit-bridge ###
 
 .env
 
 local_files
+/.idea/codeception.xml
+/.idea/phpspec.xml
