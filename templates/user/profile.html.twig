@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block body %}
+
+<section class="account-section ptb-100">
+    <div class="container">
+        {% if app.session.flashbag.has('success') %}
+        <div class="alert alert-success" role="alert">
+            {{ app.session.flashbag.get('success') | first }}
+        </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-md-4">
+                <div class="account-information">
+                    <div class="profile-thumb">
+                        <img src="{{ asset('uploads/imgs/' ~ app.user.imgUrl) }}" alt="Profile picture">
+                        <h3>{{ app.user.firstName }} {{ app.user.lastName}}</h3>
+                        <p>{{ app.user.jobTitle }}</p>
+                    </div>
+
+                    <ul>
+                        <li>
+                            <a href="#" class="active">
+                                <i class='bx bx-user'></i>
+                                My Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class='bx bx-lock-alt'></i>
+                                Change Password
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class='bx bx-briefcase'></i>
+                                Applied Job
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class='bx bx-heart'></i>
+                                Saved Jobs
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class='bx bx-log-out'></i>
+                                Log Out
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="account-details">
+                    <h3>Basic Information</h3>
+                    {{ form_start(form, {'attr': {'class': 'basic-info'}}) }}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_row(form.firstName, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_row(form.lastName, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_row(form.birthday, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_row(form.phoneNumber, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_row(form.gender, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_row(form.imgUrl, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_row(form.jobTitle, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <button type="submit" class="account-btn">Save</button>
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
