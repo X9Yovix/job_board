@@ -85,42 +85,30 @@ class UserController extends AbstractController
         ]);
     }
 
-#[Route('/updatePassword', name: 'update_password')]
-public function updatePassword(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
-
-{
-
-    /**
- * @var \App\Entity\User $user
- */
-    $user = $this->getUser();
-    $formData = [
-        'currentPassword' => $user->getPassword(),
-        'newPassword' => '',
-        'confirmPassword' => '',
-    ];
-    $form = $this->createForm(ChangePasswordType::class,$formData);
-    $form->handleRequest($request);
-    if ($form->isSubmitted() && $form->isValid()) {
-        $formData = $form->getData();
-        if (!$passwordHasher->isPasswordValid($user, $formData['currentPassword'])) {
-            $this->addFlash('error', 'The current password is incorrect.');
-        } elseif ($formData['newPassword'] !== $formData['confirmPassword']) {
-            $this->addFlash('error', 'The new password and confirmation do not match.');
-        } else {
-
-            $encodedPassword = $passwordHasher->encodePassword($user, $formData['newPassword']);
-            $user->setPassword($encodedPassword);
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Password changed successfully.');
-            return $this->redirectToRoute('app_user_profile');
+    #[Route('/update-password', name: 'update_password')]
+    public function updatePassword(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
+    {
+        /**
+         * @var \App\Entity\User $user
+         */
+        $user = $this->getUser();
+        $form = $this->createForm(ChangePasswordType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $formData = $form->getData();
+            if (!$passwordHasher->isPasswordValid($user, $formData['currentPassword'])) {
+                $this->addFlash('danger', 'The current password is incorrect');
+            }else {
+                $encodedPassword = $passwordHasher->hashPassword($user, $formData['newPassword']);
+                $user->setPassword($encodedPassword);
+                $entityManager->persist($user);
+                $entityManager->flush();
+                $this->addFlash('success', 'Password changed successfully');
+                return $this->redirectToRoute('app_user_profile');
+            }
         }
+        return $this->render('user/update_password.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
-    return $this->render('user/updatePassword.html.twig', [
-        'form' => $form->createView(),
-    ]);
-}
-
 }
