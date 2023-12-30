@@ -22,4 +22,15 @@ class JobController extends AbstractController
             'appliedJobs' => $appliedJobs,
         ]);
     }
+    #[Route('/saved-jobs', name: 'user_saved_jobs',methods: ['GET'])]
+    public function savedJobs(): Response
+    {
+        $user = $this->getUser();
+
+        $savedJobs = $user->getSavedJobs();
+
+        return $this->render('user/saved_jobs.html.twig', [
+            'savedJobs' => $savedJobs,
+        ]);
+    }
 }

@@ -40,7 +40,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{ path('user_saved_jobs') }}" {% if app.request.attributes.get('_route') == 'user_saved_jobs' %}class="active"{% endif %}>
                                 <i class='bx bx-heart'></i>
                                 Saved Jobs
                             </a>

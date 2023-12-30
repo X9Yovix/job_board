@@ -58,9 +58,9 @@
                     <div class="account-details">
 
                         <div class="container mt-5">
-                            <h3 >Applied Jobs</h3>
+                            <h3>Saved Jobs</h3>
 
-                            {% if appliedJobs|length > 0 %}
+                            {% if savedJobs|length > 0 %}
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -71,7 +71,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for job in appliedJobs %}
+                                    {% for job in savedJobs %}
                                         <tr>
                                             <td>{{ job.getTitle() }}</td>
                                             <td>{{ job.getDescription() }}</td>
@@ -90,7 +90,7 @@
                                     </tbody>
                                 </table>
                             {% else %}
-                                <p>No applied jobs found.</p>
+                                <p>No saved jobs found.</p>
                             {% endif %}
                         </div>
                     </div>
