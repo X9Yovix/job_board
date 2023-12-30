@@ -81,8 +81,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
    #[ORM\Column(length: 255)]
     private ?string $imgUrl = "nada";
 
-   #[ORM\ManyToMany(targetEntity: Announcement::class, mappedBy: 'appliedUsers')]
-   private Collection $appliedJobs;
+    #[ORM\ManyToMany(targetEntity: Announcement::class, mappedBy: 'appliedUsers')]
+    private Collection $appliedJobs;
+
+    #[ORM\ManyToMany(targetEntity: Announcement::class, inversedBy: 'users')]
+    #[ORM\JoinTable(name: "users_saved_jobs")]
+    private Collection $savedJobs;
 
 
     public function __construct()
@@ -93,6 +97,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->announcements = new ArrayCollection();
         $this->companies = new ArrayCollection();
         $this->appliedJobs = new ArrayCollection();
+        $this->savedJobs = new ArrayCollection();
     }
 
     /* public function __toString(): string
@@ -414,6 +419,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->appliedJobs->removeElement($appliedJob)) {
             $appliedJob->removeAppliedUser($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Announcement>
+     */
+    public function getSavedJobs(): Collection
+    {
+        return $this->savedJobs;
+    }
+
+    public function addSavedJob(Announcement $savedJob): static
+    {
+        if (!$this->savedJobs->contains($savedJob)) {
+            $this->savedJobs->add($savedJob);
+        }
+
+        return $this;
+    }
+
+    public function removeSavedJob(Announcement $savedJob): static
+    {
+        $this->savedJobs->removeElement($savedJob);
 
         return $this;
     }

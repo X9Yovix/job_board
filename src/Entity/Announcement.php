@@ -60,12 +60,17 @@ class Announcement
     private ?Company $company = null;
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'appliedJobs')]
+    #[ORM\JoinTable(name: "users_applications")]
     private Collection $appliedUsers;
+
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'savedJobs')]
+    private Collection $users;
 
     public function __construct()
     {
         $this->keywords = new ArrayCollection();
         $this->appliedUsers = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     #[ORM\PrePersist]
@@ -286,6 +291,33 @@ class Announcement
     public function removeAppliedUser(User $appliedUser): static
     {
         $this->appliedUsers->removeElement($appliedUser);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addSavedJob($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeSavedJob($this);
+        }
 
         return $this;
     }
