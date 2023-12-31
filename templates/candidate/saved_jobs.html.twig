@@ -37,10 +37,9 @@
                                 Change Password
                             </a>
                         </li>
-                        {% if 'ROLE_CANDIDATE' in app.user.roles %}
                         <li>
-                            <a href="{{ path('app_jobs') }}" {% if
-                                app.request.attributes.get('_route')=='app_jobs' %}class="active" {% endif %}>
+                            <a href="{{ path('app_jobs') }}" {% if app.request.attributes.get('_route')=='app_jobs'
+                                %}class="active" {% endif %}>
                                 <i class='bx bx-briefcase'></i>
                                 Applied Job
                             </a>
@@ -52,7 +51,6 @@
                                 Saved Jobs
                             </a>
                         </li>
-                        {% endif %}
                         <li>
                             <a href="{{ path('app_logout') }}">
                                 <i class='bx bx-log-out'></i>
@@ -62,35 +60,54 @@
                     </ul>
                 </div>
             </div>
-
             <div class="col-md-8">
                 <div class="account-details">
-                    <h3>Update password</h3>
-                    {{ form_start(form, {'attr': {'class': 'basic-info'}}) }}
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                {{ form_row(form.currentPassword, {'attr': {'class': 'form-control'}}) }}
-                            </div>
-                        </div>
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                {{ form_row(form.newPassword.first, {'attr': {'class': 'form-control'}}) }}
-                            </div>
-                        </div>
+                    <div class="container mt-5">
+                        <h3>Saved Jobs</h3>
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                {{ form_row(form.newPassword.second, {'attr': {'class': 'form-control'}}) }}
-                            </div>
+                        {% if savedJobs|length > 0 %}
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Deadline</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for job in savedJobs %}
+                                <tr>
+                                    <td>{{ job.getTitle() }}</td>
+                                    <td>{{ job.getDescription() }}</td>
+                                    <td>{{ job.getDeadline() ? job.getDeadline()|date('Y-m-d H:i:s') : 'N/A' }}</td>
+                                    <td>
+                                        {% if job.getStatus() == 'active' %}
+                                        <i class="fas fa-check-circle text-success"></i> Active
+                                        {% elseif job.getStatus() == 'ended' %}
+                                        <i class="fas fa-times-circle text-danger"></i> Ended
+                                        {% else %}
+                                        <i class="fas fa-info-circle text-info"></i> {{ job.getStatus() }}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <form method="post" action="{{ path('app_remove_saved_job', {'id': job.id}) }}">
+                                            <button type="submit" class="btn btn-danger">Remove</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-center mt-4 custom-pagination">
+                            {{ knp_pagination_render(savedJobs) }}
                         </div>
-
-                        <div class="col-md-12">
-                            <button type="submit" class="account-btn">Update</button>
-                        </div>
+                        {% else %}
+                        <p>No saved jobs found.</p>
+                        {% endif %}
                     </div>
-                    {{ form_end(form) }}
                 </div>
             </div>
         </div>

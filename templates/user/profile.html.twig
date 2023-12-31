@@ -15,38 +15,46 @@
             <div class="col-md-4">
                 <div class="account-information">
                     <div class="profile-thumb">
-                        <img src="{{ asset('uploads/imgs/' ~ app.user.imgUrl) }}" alt="Profile picture">
+                        {% set imageUrl = app.user.imgUrl == "" ? asset('img/default.png') :
+                        asset('uploads/imgs/' ~ app.user.imgUrl) %}
+                        <img src="{{ imageUrl }}" alt="Profile picture" width="150px">
                         <h3>{{ app.user.firstName }} {{ app.user.lastName}}</h3>
                         <p>{{ app.user.jobTitle }}</p>
                     </div>
 
                     <ul>
                         <li>
-                            <a href="#" class="active">
+                            <a href="{{ path('app_user_profile') }}" {% if
+                                app.request.attributes.get('_route')=='app_user_profile' %}class="active" {% endif %}>
                                 <i class='bx bx-user'></i>
                                 My Profile
                             </a>
                         </li>
                         <li>
-                            <a href="{{ path('update_password') }}">
+                            <a href="{{ path('update_password') }}" {% if
+                                app.request.attributes.get('_route')=='update_password' %}class="active" {% endif %}>
                                 <i class='bx bx-lock-alt'></i>
                                 Change Password
                             </a>
                         </li>
+                        {% if 'ROLE_CANDIDATE' in app.user.roles %}
                         <li>
-                            <a href="{{ path('app_jobs') }}">
+                            <a href="{{ path('app_jobs') }}" {% if
+                                app.request.attributes.get('_route')=='app_jobs' %}class="active" {% endif %}>
                                 <i class='bx bx-briefcase'></i>
                                 Applied Job
                             </a>
                         </li>
                         <li>
-                            <a href="{{ path('user_saved_jobs') }}" {% if app.request.attributes.get('_route') == 'user_saved_jobs' %}class="active"{% endif %}>
+                            <a href="{{ path('user_saved_jobs') }}" {% if
+                                app.request.attributes.get('_route')=='user_saved_jobs' %}class="active" {% endif %}>
                                 <i class='bx bx-heart'></i>
                                 Saved Jobs
                             </a>
                         </li>
+                        {% endif %}
                         <li>
-                            <a href="#">
+                            <a href="{{ path('app_logout') }}">
                                 <i class='bx bx-log-out'></i>
                                 Log Out
                             </a>

@@ -23,7 +23,7 @@ Announcement
                                 <div class="row align-items-center">
                                     <div class="col-md-2">
                                         <div class="company-logo">
-                                             <img src="{{ asset('uploads/imgs/' ~ announcement.company.logo) }}"
+                                            <img src="{{ asset('uploads/imgs/' ~ announcement.company.logo) }}"
                                                 alt="logo" width="70px" height="70px" />
                                         </div>
                                     </div>
@@ -76,16 +76,21 @@ Announcement
                                                 </tr>
                                                 <tr>
                                                     <td><span><i class='bx bx-money-withdraw'></i> Salary:</span></td>
-                                                    <td> {{ announcement.salary }}</td>
+                                                    <td>
+                                                        {% if announcement.salary %}
+                                                        {{ announcement.salary|number_format(2, '.', ' ') }} DT
+                                                        {% else %}
+                                                        Negotiable
+                                                        {% endif %}
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-
                             <div class="theme-btn">
-                                <a href="#" class="default-btn">
+                                <a href="{{ path('app_apply_job', {'id': announcement.id}) }}" class="default-btn">
                                     Apply Now
                                 </a>
                             </div>

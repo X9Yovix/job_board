@@ -11,7 +11,6 @@ class DashboardController extends AbstractController
     #[Route('/recruiter', name: 'app_recruiter_dashboard')]
     public function index(): Response
     {
-        //return $this->render('recruiter/dashboard/updateProfil.html.twig.html.twig');
         return $this->redirectToRoute('app_company_index');
     }
 }

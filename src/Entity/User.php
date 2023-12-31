@@ -79,7 +79,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $companies;
 
    #[ORM\Column(length: 255)]
-    private ?string $imgUrl = "nada";
+    private ?string $imgUrl;
 
     #[ORM\ManyToMany(targetEntity: Announcement::class, mappedBy: 'appliedUsers')]
     private Collection $appliedJobs;
@@ -93,6 +93,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->verified = false;
         $this->tokenLifetime = $_ENV['REGISTRATION_TOKEN_LIFETIME'];
+        $this->imgUrl = '';
         $this->registrationTokenLifeTime = (new DateTime('now'))->add(new DateInterval($this->tokenLifetime));
         $this->announcements = new ArrayCollection();
         $this->companies = new ArrayCollection();

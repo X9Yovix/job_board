@@ -5026,3 +5026,11 @@ a.back-to-list:hover {
 .dashboard-items a:hover {
   color: #365e7d !important
 }
+
+.theme-dark .custom-pagination .page-link {
+  color: #574c4c !important;
+}
+
+.theme-dark .custom-pagination .page-item .page-link.active.current{
+  color: #ff2d55  !important;
+}

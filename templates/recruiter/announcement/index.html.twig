@@ -35,7 +35,13 @@
             <td>{{ announcement.deadline|date('F d, Y H:i') }}</td>
             <td>{{ announcement.title }}</td>
             <td>{{ announcement.experince }}</td>
-            <td>{{ announcement.salary }}</td>
+            <td>
+                {% if announcement.salary %}
+                {{ announcement.salary|number_format(2, '.', ' ') }} DT
+                {% else %}
+                Negotiable
+                {% endif %}
+            </td>
             <td>{{ announcement.company.name }}</td>
             <td>
                 <a href="{{ path('app_announcement_show', { slug: announcement.slug }) }}"

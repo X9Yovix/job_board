@@ -30,10 +30,10 @@ class AnonymousController extends AbstractController
         $announcements = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
-            6 // items per page
+            6 
         );
 
-        return $this->render('anonymous/announcement/updateProfil.html.twig.html.twig', [
+        return $this->render('anonymous/announcement/index.html.twig', [
             'announcements' => $announcements,
         ]);
     }
@@ -46,7 +46,6 @@ class AnonymousController extends AbstractController
                 'announcement' => $announcement,
             ]);
         } catch (Exception $e) {
-            // Log or handle the exception
             throw $this->createNotFoundException('Announcement not found', $e);
         }
     }
