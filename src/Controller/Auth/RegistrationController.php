@@ -140,7 +140,8 @@ class RegistrationController extends AbstractController
             $user->setState($data['state']);
             $user->setCity($data['city']);
             $user->setPhoneNumber('(' . $data['phoneCode'] . ') ' . $data['phoneNumber']);
-            $user->setRegistrationTokenLifeTime(new \DateTime('+1 min'));
+            //$tokenLifetime = $_ENV['REGISTRATION_TOKEN_LIFETIME'];
+            //$user->setRegistrationTokenLifeTime((new DateTime('now'))->add(new DateInterval($tokenLifetime)));
             $user->setGender($data['gender']);
 
             if ($data['role'] === 'RECRUITER') {

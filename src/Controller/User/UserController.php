@@ -50,8 +50,8 @@ class UserController extends AbstractController
             'birthday' => $user->getBirthday(),
             'phoneNumber' => $user->getPhoneNumber(),
             'gender' => $user->getGender(),
+            'jobTitle' => $user->getJobTitle(),
             'imgUrl' => null,
-
         ];
 
         $form = $this->createForm(UserType::class, $formData);
