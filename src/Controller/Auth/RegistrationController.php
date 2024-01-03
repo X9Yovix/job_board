@@ -2,6 +2,8 @@
 
 namespace App\Controller\Auth;
 
+use DateTime;
+use DateInterval;
 use App\Entity\City;
 use App\Entity\User;
 use App\Entity\State;
@@ -61,7 +63,7 @@ class RegistrationController extends AbstractController
             'country' => null,
             'state' =>  null,
             'city' =>  null,
-            'role' =>null,
+            'role' => null,
             'phoneNumber' => null,
             'phoneCode' =>  null,
             'gender' =>  null,
@@ -216,7 +218,10 @@ class RegistrationController extends AbstractController
             $this->addFlash('danger', 'The token has expired.');
             $tokenRegistration = $tokenGenInterface->generateToken();
             $user->setRegistrationToken($tokenRegistration);
-            $user->setRegistrationTokenLifeTime(new \DateTime($_ENV['REGISTRATION_TOKEN_LIFETIME']));
+
+            $tokenLifetime = $_ENV['REGISTRATION_TOKEN_LIFETIME'];
+            $user->setRegistrationTokenLifeTime((new DateTime('now'))->add(new DateInterval($tokenLifetime)));
+            
             $this->entityManager->flush();
 
             $mailerService->sendEmail(
