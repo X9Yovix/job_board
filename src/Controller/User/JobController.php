@@ -2,6 +2,9 @@
 
 namespace App\Controller\User;
 
+use App\Entity\Announcement;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,5 +35,14 @@ class JobController extends AbstractController
         return $this->render('user/saved_jobs.html.twig', [
             'savedJobs' => $savedJobs,
         ]);
+    }
+    #[Route('/apply/{id}', name: 'apply_to_job')]
+    public function applyToJob(Announcement $job, Request $request,EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        $job->addAppliedUser($user);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_announcements', ['id' => $job->getId()]);
+
     }
 }
