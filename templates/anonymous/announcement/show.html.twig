@@ -83,12 +83,17 @@ Announcement
                                     </div>
                                 </div>
                             </div>
-
+                            {% if is_granted("ROLE_USER") %}
+                            {% if not app.user.getAppliedJobs().contains(announcement) %}
                             <div class="theme-btn">
-                                    <a class="default-btn" href="{{ path('apply_to_job', {'id': announcement.id}) }}">
+                                <a class="default-btn" href="{{ path('apply_to_job', {'id': announcement.id}) }}">
                                     Apply Now
                                 </a>
                             </div>
+                            {% else %}
+                                <p class="success-message">You have already applied to this job.</p>
+                            {% endif %}
+                            {% endif %}
                         </div>
                     </div>
                 </div>
