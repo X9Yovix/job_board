@@ -20,10 +20,17 @@ use App\Entity\Announcement;
 class AnnouncementController extends AbstractController
 {
     #[Route('/', name: 'app_announcement_index', methods: ['GET'])]
-    public function index(AnnouncementRepository $announcementRepository): Response
+    public function index(): Response
     {
+        /**
+         * @var \App\Entity\User $user
+         */
+        $user = $this->getUser();
+
+        $announcements = $user->getAnnouncements();
+
         return $this->render('recruiter/announcement/index.html.twig', [
-            'announcements' => $announcementRepository->findAll(),
+            'announcements' => $announcements,
         ]);
     }
 
@@ -31,8 +38,7 @@ class AnnouncementController extends AbstractController
     public function new(
         Request $request,
         EntityManagerInterface $entityManager,
-        ): Response
-    {
+    ): Response {
         $announcement = new Announcement();
         $form = $this->createForm(AnnouncementType::class, $announcement);
         $form->handleRequest($request);

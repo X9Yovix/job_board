@@ -57,7 +57,7 @@ class AnonymousController extends AbstractController
         $announcements = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
-            6 
+            6
         );
 
         return $this->render('anonymous/announcement/index.html.twig', [
@@ -65,15 +65,11 @@ class AnonymousController extends AbstractController
         ]);
     }
 
-    #[Route('/announcements/{slug}', name: 'app_announcement_show', methods: ['GET'])]
+    #[Route('/announcements/post/{slug}', name: 'app_announcement_show', methods: ['GET'])]
     public function show(Announcement $announcement): Response
     {
-        try {
-            return $this->render('anonymous/announcement/show.html.twig', [
-                'announcement' => $announcement,
-            ]);
-        } catch (Exception $e) {
-            throw $this->createNotFoundException('Announcement not found', $e);
-        }
+        return $this->render('anonymous/announcement/show.html.twig', [
+            'announcement' => $announcement,
+        ]);
     }
 }

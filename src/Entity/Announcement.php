@@ -251,12 +251,17 @@ class Announcement
 
         return $this;
     }
+
     public function generateSlug(): void
     {
         $titlePrefix = substr($this->title, 0, 4);
         $uniqueId = uniqid();
 
-        $this->setSlug(strtolower($titlePrefix . '-' . $uniqueId));
+        $slug = strtolower(str_replace(' ', '-', $titlePrefix) . '-' . $uniqueId);
+        $slug = preg_replace('/[^a-z0-9-]/', '', $slug);
+
+        $this->setSlug($slug);
+        //$this->setSlug(strtolower($titlePrefix . '-' . $uniqueId));
     }
 
     public function getCompany(): ?Company
