@@ -33,7 +33,7 @@ class AnonymousController extends AbstractController
             6 // items per page
         );
 
-        return $this->render('anonymous/announcement/updateProfil.html.twig.html.twig', [
+        return $this->render('anonymous/announcement/index.html.twig', [
             'announcements' => $announcements,
         ]);
     }

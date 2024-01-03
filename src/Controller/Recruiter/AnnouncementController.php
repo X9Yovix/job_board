@@ -22,7 +22,7 @@ class AnnouncementController extends AbstractController
     #[Route('/', name: 'app_announcement_index', methods: ['GET'])]
     public function index(AnnouncementRepository $announcementRepository): Response
     {
-        return $this->render('recruiter/announcement/updateProfil.html.twig.html.twig', [
+        return $this->render('recruiter/announcement/index.html.twig', [
             'announcements' => $announcementRepository->findAll(),
         ]);
     }
