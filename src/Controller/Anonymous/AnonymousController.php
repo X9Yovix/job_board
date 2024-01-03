@@ -18,6 +18,33 @@ class AnonymousController extends AbstractController
     {
         return $this->render('anonymous/home/index.html.twig');
     }
+    #[Route('/announcements/search', name: 'search_announcements', methods: ['POST'])]
+    public function searchAnnouncements(
+        AnnouncementRepository $announcementRepository,
+        Request $request,
+        PaginatorInterface $paginator
+    ): Response {
+        $jobTitle = $request->request->get('title');
+        $place = $request->request->get('place');
+
+        $query = $announcementRepository->createQueryBuilder('a')
+            ->leftJoin('a.company', 'c')
+            ->andWhere('a.title LIKE :jobTitle')
+            ->andWhere('c.address LIKE :place')
+            ->setParameter('jobTitle', '%' . $jobTitle . '%')
+            ->setParameter('place', '%' . $place . '%')
+            ->getQuery();
+
+        $announcements = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            6 // items per page
+        );
+
+        return $this->render('anonymous/announcement/index.html.twig', [
+            'announcements' => $announcements,
+        ]);
+    }
 
     #[Route('/announcements', name: 'app_announcements')]
     public function announcements(AnnouncementRepository $announcementRepository, Request $request, PaginatorInterface $paginator): Response

@@ -14,11 +14,11 @@
 					<h1>Find The Best Job For Future</h1>
 				</div>
 
-				<form class="find-form">
+				<form action="{{ path('search_announcements') }}" method="POST" class="find-form">
 					<div class="row">
 						<div class="col-lg-4">
 							<div class="form-group">
-								<input type="text" class="form-control" id="exampleInputEmail1"
+								<input type="text" class="form-control" id="title" name="title"
 									placeholder="Job Title or Keyword">
 								<i class="bx bx-search-alt"></i>
 							</div>
@@ -26,7 +26,7 @@
 
 						<div class="col-lg-4">
 							<div class="form-group">
-								<input type="text" class="form-control" id="exampleInputEmail2" placeholder="Location">
+								<input type="text" class="form-control" id="place" name="place" placeholder="Location">
 								<i class="bx bx-location-plus"></i>
 							</div>
 						</div>
